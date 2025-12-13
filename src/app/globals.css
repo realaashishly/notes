@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #111111;
-  --muted: #4b4b4b;
+  --background: #000000;
+  --foreground: #f5f5f7;
+  --muted: #c5c5c9;
   
   /* Premium Colors & Accents (User Preferred) */
   --neon-cyan: #00f0ff;
@@ -22,7 +22,7 @@
   --base: 1rem;
   --dot-gap: calc(var(--base) * 2.6);
   --dot-size: calc(var(--base) * 0.12);
-  --dot-color: rgba(0,0,0,0.06); 
+  --dot-color: rgba(54, 41, 41, 0.247); 
   
   --wiggle-x: 0.18rem;
   --wiggle-y: 0.12rem;
@@ -31,29 +31,27 @@
   --wiggle-duration-3: 13s;
 }
 
-:root.dark {
-  --background: #0d0d0f;
-  --foreground: #f5f5f7;
-  --muted: #c5c5c9;
-  --dot-color: rgba(255,255,255,0.045);
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-oswald: var(--font-oswald);
+  --font-outfit: var(--font-outfit);
   
   --color-neon-cyan: var(--neon-cyan);
   --color-neon-purple: var(--neon-purple);
   --color-neon-blue: var(--neon-blue);
 }
 
-body {
+
+html {
   background: var(--background);
+}
+
+body {
+  background: transparent;
   color: var(--foreground);
-  font-family: var(--font-oswald), sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
   position: relative;
@@ -136,6 +134,7 @@ body::before {
 }
 .prose h1, .prose h2, .prose h3, .prose h4 {
   color: var(--foreground);
+  font-family: var(--font-outfit), sans-serif;
 }
 .prose em {
   color: #2EC4B6; /* Teal */

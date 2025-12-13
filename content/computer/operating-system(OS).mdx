@@ -1,104 +1,958 @@
-# Operating Systems
+<!DOCTYPE html>
 
-An Operating System (OS) is the main software that controls a computer’s hardware and helps other programs run smoothly. It acts as a bridge between the user and the computer.
+<html>
+  <head>
+    <title>Operating Systems Notes (Dark Mode)</title>
+    <style>
+      /* --- General Layout --- */
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0; /* Light Gray text */
 
-## Purpose of an OS
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
 
-The primary purpose of an OS is to <span color="#D32F2F">manage a computer’s hardware</span> and <span color="#1976D2">run applications</span> so the system works <span color="#388E3C">smoothly and efficiently</span>.
+      /* --- Typography --- */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        border-bottom: 3px solid #333;
+        padding-bottom: 10px;
+      }
 
-- Manages hardware like CPU, memory, and storage
-- Runs and controls applications
-- Manages files and data
-- Provides a user interface
-- Ensures system security and stability
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+        border-left: 5px solid #ff9800; /* Bright Orange accent */
+        padding-left: 15px;
+      }
 
-Example: Windows, macOS, Linux, Android, iOS.
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #b0bec5; /* Blue-Grey for subheaders */
+      }
 
-## Types of Operating Systems
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-style: italic;
+        color: #90a4ae;
+      }
 
-The primary categories of operating systems include the following types:
+      p {
+        margin-bottom: 15px;
+      }
 
-### 1. Batch Operating System
+      /* --- List Styling --- */
+      ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style-position: outside;
+      }
 
-- Processes jobs in <span color="#D32F2F">batches</span> with <span color="#D32F2F">no user interaction</span>.
-- Good for <span color="#D32F2F">repetitive</span> and large-volume tasks.
-- **Examples:** IBM OS/360, early UNIX batch systems.
+      li {
+        margin-bottom: 8px;
+        color: #cfd8dc;
+      }
 
----
+      /* --- HIGHLIGHTING SYSTEM (Dark Mode) --- */
 
-### 2. Multiprogramming Operating System
+      /* Strategy: Use RGBA for backgrounds to keep them subtle.
+           Use bright pastel colors for text to ensure contrast.
+        */
 
-- <span color="#1976D2">Multiple programs</span> stay in memory at the same time.
-- <span color="#1976D2">CPU switches</span> between them to improve efficiency.
-- **Examples:** IBM OS/2, UNIX, Linux.
+      /* Level 1: Very Important (Background Highlight) */
+      .bg-red {
+        background-color: rgba(229, 57, 53, 0.2); /* Semi-transparent Red */
+        color: #ff8a80; /* Light Salmon */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(229, 57, 53, 0.3);
+      }
 
----
+      .bg-blue {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #82b1ff; /* Light Blue */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+      }
 
-### 3. Multitasking Operating System
+      .bg-green {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #b9f6ca; /* Mint Green */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
 
-- Allows users to run <span color="#388E3C">several tasks simultaneously</span>.
-- <span color="#388E3C">Quickly switches</span> between active programs.
-- **Examples:** Windows, macOS, Linux, Android.
+      .bg-purple {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #ea80fc; /* Light Purple */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(156, 39, 176, 0.3);
+      }
 
----
+      .bg-orange {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #ffd180; /* Light Orange */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 152, 0, 0.3);
+      }
 
-### 4. Time-Sharing Operating System
+      .bg-teal {
+        background-color: rgba(0, 150, 136, 0.2);
+        color: #a7ffeb; /* Aqua */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 150, 136, 0.3);
+      }
 
-- <span color="#7B1FA2">Many users</span> share the CPU simultaneously.
-- Each gets a small <span color="#7B1FA2">time slice</span> for interactive use.
-- **Examples:** UNIX, Multics, server-based Linux systems.
+      /* Level 2: Less Important (Text Color Only - Pastels) */
+      .text-red {
+        color: #ef9a9a;
+        font-weight: 600;
+      }
+      .text-blue {
+        color: #90caf9;
+        font-weight: 600;
+      }
+      .text-green {
+        color: #a5d6a7;
+        font-weight: 600;
+      }
+      .text-purple {
+        color: #ce93d8;
+        font-weight: 600;
+      }
+      .text-orange {
+        color: #ffcc80;
+        font-weight: 600;
+      }
+      .text-teal {
+        color: #80cbc4;
+        font-weight: 600;
+      }
+      .text-indigo {
+        color: #9fa8da;
+        font-weight: 600;
+      }
+      .text-pink {
+        color: #f48fb1;
+        font-weight: 600;
+      }
+      .text-cyan {
+        color: #81d4fa;
+        font-weight: 600;
+      }
+      .text-brown {
+        color: #bcaaa4;
+        font-weight: 600;
+      }
 
----
+      /* --- Callout Box (Dark Mode) --- */
+      .example-box {
+        background-color: #1e1e1e; /* Slightly lighter than body */
+        border-left: 4px solid #ffd54f; /* Bright Amber */
+        padding: 10px 15px;
+        margin: 10px 0 25px 0;
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
 
-### 5. Real-Time Operating System (RTOS)
+      .example-label {
+        font-weight: bold;
+        color: #ffd54f; /* Matching border color */
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-right: 5px;
+      }
 
-#### a. Hard RTOS
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333; /* Dark divider */
+        margin: 40px 0;
+      }
 
-- Must respond within <span color="#E65100">strict, guaranteed deadlines</span>.
-- Used in <span color="#E65100">critical systems</span>.
-- **Examples:** VxWorks, RTLinux, QNX.
+      .diagram {
+        width: 100%;
+        height: auto;
+        border: 1px solid #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        padding: 10px;
+        overflow: hidden;
 
-#### b. Soft RTOS
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Operating Systems</h1>
+    <p>
+      An Operating System (OS) is the main software that controls a computer’s
+      hardware and helps other programs run smoothly. It acts as a bridge
+      between the user and the computer.
+    </p>
 
-- Deadlines are important but <span color="#FB8C00">minor delays are acceptable</span>.
-- **Examples:** Windows CE, PSOS, soft real-time Linux.
+    <h2>Purpose of an OS</h2>
+    <p>
+      The primary purpose of an OS is to
+      <span class="bg-red">manage a computer’s hardware</span> and
+      <span class="text-blue">run applications</span> so the system works
+      <span class="text-green">smoothly and efficiently</span>.
+    </p>
 
----
+    <ul>
+      <li>Manages hardware like CPU, memory, and storage</li>
+      <li>Runs and controls applications</li>
+      <li>Manages files and data</li>
+      <li>Provides a user interface</li>
+      <li>Ensures system security and stability</li>
+    </ul>
 
-### 6. Distributed Operating System
+    <div class="example-box">
+      <span class="example-label">Examples</span> Windows, macOS, Linux,
+      Android, iOS.
+    </div>
 
-- <span color="#00796B">Multiple computers</span> work together as a <span color="#00796B">single system</span>.
-- <span color="#00796B">Resources are shared</span> across machines.
-- **Examples:** LOCUS, Amoeba, Google-style cluster OS models.
+    <h2>Types of Operating Systems</h2>
+    <p>
+      The primary categories of operating systems include the following types:
+    </p>
 
----
+    <h3>1. Batch Operating System</h3>
+    <ul>
+      <li>
+        Processes jobs in <span class="bg-red">batches</span> with
+        <span class="text-red">no user interaction</span>.
+      </li>
+      <li>
+        Good for <span class="text-red">repetitive</span> and large-volume
+        tasks.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> IBM OS/360, early UNIX batch
+      systems.
+    </div>
 
-### 7. Network Operating System (NOS)
+    <hr />
 
-- Manages <span color="#303F9F">network resources</span> like users, files, and security.
-- Used in <span color="#303F9F">LAN/WAN</span> environments.
-- **Examples:** Windows Server, UNIX, Novell NetWare.
+    <h3>2. Multiprogramming Operating System</h3>
+    <ul>
+      <li>
+        <span class="bg-blue">Multiple programs</span> stay in memory at the
+        same time.
+      </li>
+      <li>
+        <span class="text-blue">CPU switches</span> between them to improve
+        efficiency.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> IBM OS/2, UNIX, Linux.
+    </div>
 
----
+    <hr />
 
-### 8. Mobile Operating System
+    <h3>3. Multitasking Operating System</h3>
+    <ul>
+      <li>
+        Allows users to run
+        <span class="bg-green">several tasks simultaneously</span>.
+      </li>
+      <li>
+        <span class="text-green">Quickly switches</span> between active
+        programs.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Windows, macOS, Linux,
+      Android.
+    </div>
 
-- Designed for <span color="#C2185B">smartphones and tablets</span>.
-- Optimized for <span color="#C2185B">touch, sensors</span>, and app-based use.
-- **Examples:** Android, iOS, HarmonyOS.
+    <hr />
 
----
+    <h3>4. Time-Sharing Operating System</h3>
+    <ul>
+      <li>
+        <span class="bg-purple">Many users</span> share the CPU simultaneously.
+      </li>
+      <li>
+        Each gets a small <span class="text-purple">time slice</span> for
+        interactive use.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> UNIX, Multics, server-based
+      Linux systems.
+    </div>
 
-### 9. Cloud-Based Operating System
+    <hr />
 
-- Runs from <span color="#0288D1">cloud infrastructure</span> with minimal local storage.
-- Apps and data <span color="#0288D1">stored online</span>.
-- **Examples:** Chrome OS, Joli OS, EyeOS.
+    <h3>5. Real-Time Operating System (RTOS)</h3>
 
----
+    <h4>a. Hard RTOS</h4>
+    <ul>
+      <li>
+        Must respond within
+        <span class="bg-orange">strict, guaranteed deadlines</span>.
+      </li>
+      <li>Used in <span class="text-orange">critical systems</span>.</li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> VxWorks, RTLinux, QNX.
+    </div>
 
-### 10. Embedded Operating System
+    <h4>b. Soft RTOS</h4>
+    <ul>
+      <li>
+        Deadlines are important but
+        <span class="text-orange">minor delays are acceptable</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Windows CE, PSOS, soft
+      real-time Linux.
+    </div>
 
-- Built for devices with <span color="#5D4037">dedicated functions</span> and <span color="#5D4037">limited hardware</span>.
-- Fast, compact, and reliable.
-- **Examples:** Embedded Linux, VxWorks, Windows Embedded, RTOS variants.
+    <hr />
+
+    <h3>6. Distributed Operating System</h3>
+    <ul>
+      <li>
+        <span class="bg-teal">Multiple computers</span> work together as a
+        <span class="text-teal">single system</span>.
+      </li>
+      <li>
+        <span class="text-teal">Resources are shared</span> across machines.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> LOCUS, Amoeba, Google-style
+      cluster OS models.
+    </div>
+
+    <hr />
+
+    <h3>7. Network Operating System (NOS)</h3>
+    <ul>
+      <li>
+        Manages <span class="bg-blue">network resources</span> like users,
+        files, and security.
+      </li>
+      <li>Used in <span class="text-indigo">LAN/WAN</span> environments.</li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Windows Server, UNIX, Novell
+      NetWare.
+    </div>
+
+    <hr />
+
+    <h3>8. Mobile Operating System</h3>
+    <ul>
+      <li>Designed for <span class="bg-red">smartphones and tablets</span>.</li>
+      <li>
+        Optimized for <span class="text-pink">touch, sensors</span>, and
+        app-based use.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Android, iOS, HarmonyOS.
+    </div>
+
+    <hr />
+
+    <h3>9. Cloud-Based Operating System</h3>
+    <ul>
+      <li>
+        Runs from <span class="bg-blue">cloud infrastructure</span> with minimal
+        local storage.
+      </li>
+      <li>Apps and data <span class="text-cyan">stored online</span>.</li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Chrome OS, Joli OS, EyeOS.
+    </div>
+
+    <hr />
+
+    <h3>10. Embedded Operating System</h3>
+    <ul>
+      <li>
+        Built for devices with
+        <span class="bg-orange">dedicated functions</span> and
+        <span class="text-brown">limited hardware</span>.
+      </li>
+      <li>Fast, compact, and reliable.</li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Embedded Linux, VxWorks,
+      Windows Embedded, RTOS variants.
+    </div>
+    <hr />
+    <br />
+
+    <h1>OS Services</h1>
+    <p>
+      An Operating System (OS) provides
+      <span class="bg-red">essential services</span> that help users and
+      applications work smoothly with computer hardware. These services make the
+      system <span class="text-red">efficient, secure, and easy to use</span>.
+    </p>
+    <img src="/os/2.jpeg" class="diagram" alt="Description of image"" />
+
+    <h3>1. Program Execution</h3>
+    <ul>
+      <li>
+        The OS <span class="bg-blue">loads programs into memory</span> and runs
+        them.
+      </li>
+      <li>Ensures they <span class="text-blue">execute properly</span>.</li>
+    </ul>
+    <hr />
+
+    <h3>2. File Management</h3>
+    <ul>
+      <li>
+        Handles creation, deletion, reading, writing, and
+        <span class="bg-green">organization of files</span>.
+      </li>
+      <li>Manages <span class="text-green">folders and directories</span>.</li>
+    </ul>
+    <hr />
+
+    <h3>3. Memory Management</h3>
+    <ul>
+      <li>
+        <span class="bg-purple">Allocates and manages memory</span> for
+        different programs.
+      </li>
+      <li>
+        Ensures they run <span class="text-purple">without conflict</span>.
+      </li>
+    </ul>
+    <hr />
+
+    <h3>4. Device Management</h3>
+    <ul>
+      <li>
+        <span class="bg-orange">Controls hardware devices</span> (keyboard,
+        mouse, printers, etc.).
+      </li>
+      <li>Works through <span class="text-orange">drivers</span>.</li>
+    </ul>
+    <hr />
+
+    <h3>5. Process Management</h3>
+    <ul>
+      <li>
+        Creates, schedules, and manages
+        <span class="bg-teal">multiple running programs</span> (processes).
+      </li>
+    </ul>
+    <hr />
+
+    <h3>6. Security & Protection</h3>
+    <ul>
+      <li>
+        <span class="bg-red">Protects data and resources</span> from
+        unauthorized access.
+      </li>
+      <li>
+        Uses
+        <span class="text-red">passwords, permissions, and access control</span
+        >.
+      </li>
+    </ul>
+    <hr />
+
+    <h3>7. Communication</h3>
+    <ul>
+      <li>
+        Allows programs or devices to
+        <span class="bg-blue">communicate with each other</span>.
+      </li>
+      <li>Facilitates <span class="text-blue">data exchange</span>.</li>
+    </ul>
+    <hr />
+
+    <h3>8. Error Detection</h3>
+    <ul>
+      <li>
+        <span class="bg-green">Monitors the system for errors</span> constantly.
+      </li>
+      <li>Takes action to <span class="text-green">prevent failure</span>.</li>
+    </ul>
+    <hr />
+
+    <h3>9. Resource Allocation</h3>
+    <ul>
+      <li>
+        <span class="bg-purple">Distributes system resources</span> (CPU,
+        memory, storage).
+      </li>
+      <li>
+        Allocates them <span class="text-purple">efficiently among tasks</span>.
+      </li>
+    </ul>
+    <hr />
+    <br />
+
+    <h1>System Calls</h1>
+    <p>
+      System Calls are <span class="bg-orange">special requests</span> made by a
+      program to the Operating System (OS) to perform tasks that the program
+      cannot do directly.
+    </p>
+    <p>
+      They act as a{" "}
+      <span class="text-orange">bridge between user programs and the OS</span>.
+    </p>
+
+    <h2>Why System Calls Are Needed?</h2>
+    <p>
+      Because user programs are
+      <span class="bg-red">not allowed to directly access hardware</span> or
+      critical system resources for
+      <span class="text-red">safety and control</span>.
+    </p>
+    <p>
+      So, they use system calls to <span class="text-red">ask the OS</span> to
+      do it for them.
+    </p>
+
+    <h2>Types of System Calls</h2>
+
+    <h3>1. Process Control</h3>
+    <ul>
+      <li>
+        Used for
+        <span class="bg-red">creating, terminating, and managing processes</span
+        >.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> fork(), exit(), wait()
+    </div>
+
+    <hr />
+
+    <h3>2. File Management</h3>
+    <ul>
+      <li>
+        Used to
+        <span class="bg-blue">create, read, write, and delete files</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> open(), read(), write(),
+      close()
+    </div>
+
+    <hr />
+
+    <h3>3. Device Management</h3>
+    <ul>
+      <li>
+        Handles device requests like
+        <span class="bg-green">reading from or writing to hardware</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> ioctl(), read()
+    </div>
+
+    <hr />
+
+    <h3>4. Information Maintenance</h3>
+    <ul>
+      <li>
+        Used to <span class="bg-purple">get or set system information</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> getpid(), settimeofday()
+    </div>
+
+    <hr />
+
+    <h3>5. Communication (IPC)</h3>
+    <ul>
+      <li>
+        Enables processes to
+        <span class="bg-teal">communicate with each other</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> pipe(), shmget(), send(),
+      recv()
+    </div>
+
+    <hr />
+
+    <h2>Real-World Example</h2>
+    <p>
+      When you save a file, the application calls the OS using a system call
+      like <span class="bg-orange">write()</span> → The OS then
+      <span class="text-orange">saves the data to storage</span>.
+    </p>
+
+    <hr />
+    <br />
+
+    <h1>Operating System Structure</h1>
+    <p>
+      The structure of an Operating System (OS) defines
+      <span class="bg-blue">how its components are organized</span> and how they
+      interact. Different structures offer different levels of
+      <span class="text-blue">flexibility, security, and performance</span>.
+    </p>
+
+    <h3>1. Monolithic Structure</h3>
+    <ul>
+      <li>
+        All OS services run together in
+        <span class="bg-red">one large kernel</span>.
+      </li>
+      <li>
+        <span class="text-red">Fast performance</span> due to direct
+        communication.
+      </li>
+      <li>
+        <span class="text-red">Harder to maintain</span> because a bug in one
+        service can crash the whole system.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> UNIX, Linux
+    </div>
+
+    <hr />
+
+    <h3>2. Layered Structure</h3>
+    <ul>
+      <li>
+        The OS is <span class="bg-blue">divided into layers</span>, each built
+        on top of the other.
+      </li>
+      <li>
+        Lower layers interact with hardware; higher layers interact with
+        <span class="text-blue">users</span>.
+      </li>
+      <li>
+        <span class="text-blue">Easy to manage</span> with clear separation of
+        functions.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>3. Microkernel Structure</h3>
+    <ul>
+      <li>
+        Only <span class="bg-green">essential functions</span> run in the kernel
+        (like CPU scheduling, memory handling).
+      </li>
+      <li>Other services run in <span class="text-green">user space</span>.</li>
+      <li><span class="text-green">More secure</span> and easier to extend.</li>
+      <li>Slightly slower due to increased communication overhead.</li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Modular Structure</h3>
+    <ul>
+      <li>
+        OS is built using <span class="bg-purple">modules</span> that can be
+        loaded or unloaded as needed.
+      </li>
+      <li>
+        Highly <span class="text-purple">flexible and easier to update</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Modern Linux kernels
+    </div>
+
+    <hr />
+
+    <h3>5. Hybrid Structure</h3>
+    <ul>
+      <li>
+        Combines features of
+        <span class="bg-orange">monolithic and microkernel</span> designs.
+      </li>
+      <li>
+        Offers <span class="text-orange">good performance</span> and
+        <span class="text-orange">better stability</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Examples</span> Windows, macOS
+    </div>
+
+    <hr />
+
+    <h3>6. Virtual Machine Structure</h3>
+    <ul>
+      <li>
+        Creates <span class="bg-teal">multiple virtual systems</span> on a
+        single physical machine.
+      </li>
+      <li>Provides <span class="text-teal">isolation between users</span>.</li>
+      <li>Supports testing and cloud systems.</li>
+    </ul>
+    <hr />
+    <br />
+
+    <h1>Booting Process (Cold & Warm Boot)</h1>
+    <p>
+      The <span class="bg-blue">booting process</span> is the sequence of steps
+      a computer follows to start the
+      <span class="text-blue">operating system</span>.
+    </p>
+
+    <h2>1. Cold Boot (Hard Boot)</h2>
+    <p>
+      Starting a computer from a
+      <span class="bg-red">completely powered-off state</span>.
+    </p>
+
+    <h3>When it Happens:</h3>
+    <ul>
+      <li>
+        Turning on the PC using the <span class="text-red">power button</span>
+      </li>
+      <li>Restarting after a full shutdown</li>
+    </ul>
+
+    <h3>Steps:</h3>
+    <ul>
+      <li>Power is switched on</li>
+      <li>
+        <span class="bg-red">BIOS/UEFI runs POST</span> (Power-On Self-Test)
+      </li>
+      <li>Hardware is checked</li>
+      <li>OS is loaded from storage into memory</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Key Point:</span> A cold boot performs a
+      <span class="text-red">full hardware check</span>.
+    </div>
+
+    <hr />
+
+    <h2>2. Warm Boot (Soft Boot)</h2>
+    <p>
+      Restarting the computer
+      <span class="bg-green">without turning off the power</span>.
+    </p>
+
+    <h3>When it Happens:</h3>
+    <ul>
+      <li>
+        Clicking <strong><q>Restart</q></strong> in the OS
+      </li>
+      <li>
+        Pressing <strong><q>Ctrl + Alt + Del</q></strong> (Windows)
+      </li>
+    </ul>
+
+    <h3>Steps:</h3>
+    <ul>
+      <li>System restarts while still powered</li>
+      <li>
+        <span class="bg-green">POST may be skipped or partially run</span>
+      </li>
+      <li>OS reloads into memory</li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Key Point:</span> A warm boot is
+      <span class="text-green">faster</span> because the hardware check is
+      reduced.
+    </div>
+
+    <hr />
+
+    <h2>Difference between Cold Boot and Warm Boot</h2>
+    <table
+      style="
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 30px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      "
+    >
+      <thead>
+        <tr
+          style="
+            background-image: linear-gradient(to right, #4527a0, #5e35b1);
+            color: #ffffff;
+            font-size: 1.1em;
+          "
+        >
+          <th
+            style="
+              padding: 15px;
+              text-align: left;
+              border: none;
+              border-radius: 12px 0 0 0;
+              font-weight: 700;
+            "
+          >
+            Feature
+          </th>
+          <th
+            style="
+              padding: 15px;
+              text-align: left;
+              border: none;
+              font-weight: 700;
+            "
+          >
+            Cold Boot
+          </th>
+          <th
+            style="
+              padding: 15px;
+              text-align: left;
+              border: none;
+              border-radius: 0 12px 0 0;
+              font-weight: 700;
+            "
+          >
+            Warm Boot
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828">
+          <td
+            style="
+              padding: 15px;
+              border: none;
+              color: #90caf9;
+              font-weight: 600;
+            "
+          >
+            Power State
+          </td>
+          <td style="padding: 15px; border: none; color: #ffcdd2">
+            <span style="color: #ff8a80">Starts from OFF</span>
+          </td>
+          <td style="padding: 15px; border: none; color: #c8e6c9">
+            <span style="color: #a5d6a7">Restarts while ON</span>
+          </td>
+        </tr>
+        <tr style="background-color: #1e1e1e">
+          <td
+            style="
+              padding: 15px;
+              border: none;
+              color: #90caf9;
+              font-weight: 600;
+            "
+          >
+            Speed
+          </td>
+          <td style="padding: 15px; border: none; color: #ffcdd2">
+            <span style="color: #ff8a80">Slower</span>
+          </td>
+          <td style="padding: 15px; border: none; color: #c8e6c9">
+            <span style="color: #a5d6a7">Faster</span>
+          </td>
+        </tr>
+        <tr style="background-color: #282828">
+          <td
+            style="
+              padding: 15px;
+              border: none;
+              color: #90caf9;
+              font-weight: 600;
+            "
+          >
+            Hardware Check
+          </td>
+          <td style="padding: 15px; border: none; color: #ffcdd2">
+            <span
+              style="
+                background-color: rgba(229, 57, 53, 0.2);
+                color: #ff8a80;
+                padding: 3px 8px;
+                border-radius: 4px;
+              "
+              >Full POST</span
+            >
+          </td>
+          <td style="padding: 15px; border: none; color: #c8e6c9">
+            <span
+              style="
+                background-color: rgba(76, 175, 80, 0.2);
+                color: #b9f6ca;
+                padding: 3px 8px;
+                border-radius: 4px;
+              "
+              >Partial or skipped</span
+            >
+          </td>
+        </tr>
+        <tr style="background-color: #1e1e1e">
+          <td
+            style="
+              padding: 15px;
+              border: none;
+              color: #90caf9;
+              font-weight: 600;
+              border-radius: 0 0 0 12px;
+            "
+          >
+            Use Case
+          </td>
+          <td style="padding: 15px; border: none; color: #e0e0e0">
+            First startup
+          </td>
+          <td
+            style="
+              padding: 15px;
+              border: none;
+              color: #e0e0e0;
+              border-radius: 0 0 12px 0;
+            "
+          >
+            Restarting after update or crash
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
