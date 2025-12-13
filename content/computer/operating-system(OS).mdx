@@ -208,6 +208,7 @@
 
       }
     </style>
+
   </head>
   <body>
     <h1>Operating Systems</h1>
@@ -954,5 +955,78 @@
         </tr>
       </tbody>
     </table>
+
+    <br>
+    <h1>Program vs. Process</h1>
+
+    <h3>1. Program</h3>
+    <p>
+        A program is a <span class="bg-blue">passive entity</span>. It is a set of instructions stored on a secondary storage device (like a Hard Disk) containing code that is yet to be executed.
+    </p>
+    <ul>
+        <li>It exists as an <span class="text-blue">executable file</span> (e.g., .exe, .py).</li>
+        <li>It does not require any <span class="text-blue">system resources</span> (like CPU or RAM) until it is run.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> MS Word installed on your computer (not opened).
+    </div>
+
+    <hr>
+
+    <h3>2. Process</h3>
+    <p>
+        A process is a <span class="bg-green">program in execution</span>. It is an <span class="bg-green">active entity</span> that is currently loaded into the main memory (RAM) and being processed by the CPU.
+    </p>
+    <ul>
+        <li>It requires <span class="text-green">system resources</span> like CPU time, memory, and I/O devices.</li>
+        <li>It has a specific <span class="text-green">lifecycle</span> (Creation, Execution, Termination).</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> MS Word currently open and being used to type a document.
+    </div>
+
+    <img src="/os/3.jpeg" alt="program vs process" class="diagram"/>
+
+    <h3>Key Differences</h3>
+    <table style="width: 100%;
+                  border-collapse: separate;
+                  border-spacing: 0;
+                  margin-top: 20px;
+                  border-radius: 12px;
+                  overflow: hidden;
+                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+        <thead>
+            <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1);
+                       color: #FFFFFF;
+                       font-size: 1.1em;">
+                <th style="padding: 15px; text-align: left; border: none; font-weight: 700;">Feature</th>
+                <th style="padding: 15px; text-align: left; border: none; font-weight: 700;">Program</th>
+                <th style="padding: 15px; text-align: left; border: none; font-weight: 700;">Process</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: #282828;">
+                <td style="padding: 15px; border: none; color: #90CAF9; font-weight: 600;">Nature</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;"><span class="bg-blue">Passive Entity</span></td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;"><span class="bg-green">Active Entity</span></td>
+            </tr>
+            <tr style="background-color: #1E1E1E;">
+                <td style="padding: 15px; border: none; color: #90CAF9; font-weight: 600;">Location</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Stored on <span class="text-blue">Disk</span></td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Loaded in <span class="text-green">Memory (RAM)</span></td>
+            </tr>
+            <tr style="background-color: #282828;">
+                <td style="padding: 15px; border: none; color: #90CAF9; font-weight: 600;">Resources</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Does not need resources</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Needs CPU, RAM, I/O</td>
+            </tr>
+            <tr style="background-color: #1E1E1E;">
+                <td style="padding: 15px; border: none; color: #90CAF9; font-weight: 600;">Lifespan</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Permanent (until deleted)</td>
+                <td style="padding: 15px; border: none; color: #E0E0E0;">Temporary (starts & ends)</td>
+            </tr>
+        </tbody>
+    </table>
+
   </body>
 </html>
