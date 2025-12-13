@@ -2,7 +2,40 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
+  --muted: #4b4b4b;
+  
+  /* Premium Colors & Accents (User Preferred) */
+  --neon-cyan: #00f0ff;
+  --neon-purple: #bd00ff;
+  --neon-blue: #2f88ff;
+  
+  --accent: #3A86FF; /* User Blue */
+  --accent-2: #FF006E; /* User Pink */
+  --accent-3: #8338EC; /* User Purple */
+  --muted-strong: #D00000; /* User Dark Red */
+
+  --deep-bg: #030014;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  
+  /* Dot Animation Config */
+  --base: 1rem;
+  --dot-gap: calc(var(--base) * 2.6);
+  --dot-size: calc(var(--base) * 0.12);
+  --dot-color: rgba(0,0,0,0.06); 
+  
+  --wiggle-x: 0.18rem;
+  --wiggle-y: 0.12rem;
+  --wiggle-duration-1: 6s;
+  --wiggle-duration-2: 9s;
+  --wiggle-duration-3: 13s;
+}
+
+:root.dark {
+  --background: #0d0d0f;
+  --foreground: #f5f5f7;
+  --muted: #c5c5c9;
+  --dot-color: rgba(255,255,255,0.045);
 }
 
 @theme inline {
@@ -10,17 +43,101 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-oswald: var(--font-oswald);
+  
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-purple: var(--neon-purple);
+  --color-neon-blue: var(--neon-blue);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-oswald), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Animated Dotted Background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  
+  background-image:
+    radial-gradient(circle at center, var(--dot-color) var(--dot-size), transparent 0),
+    radial-gradient(circle at center, var(--dot-color) calc(var(--dot-size) * 0.9), transparent 0),
+    radial-gradient(circle at center, var(--dot-color) calc(var(--dot-size) * 0.75), transparent 0);
+    
+  background-size: var(--dot-gap) var(--dot-gap), var(--dot-gap) var(--dot-gap), var(--dot-gap) var(--dot-gap);
+  
+  background-position:
+    0px 0px,
+    calc(var(--dot-gap) / 2) calc(var(--dot-gap) / 2),
+    calc(var(--dot-gap) * 0.33) calc(var(--dot-gap) * 0.66);
+    
+  opacity: 0.95;
+  will-change: background-position, transform;
+  
+  animation:
+    wiggleA var(--wiggle-duration-1) ease-in-out infinite,
+    wiggleA var(--wiggle-duration-2) ease-in-out infinite,
+    wiggleA var(--wiggle-duration-3) ease-in-out infinite;
+    
+  animation-delay: 0s, -2s, -4.2s;
+}
+
+@keyframes wiggleA {
+  0%   { background-position: 0px 0px, calc(var(--dot-gap)/2) calc(var(--dot-gap)/2), calc(var(--dot-gap)*0.33) calc(var(--dot-gap)*0.66); }
+  25%  { background-position: var(--wiggle-x) var(--wiggle-y), calc(var(--dot-gap)/2 - var(--wiggle-x)) calc(var(--dot-gap)/2 + var(--wiggle-y)), calc(var(--dot-gap)*0.33 + var(--wiggle-x)) calc(var(--dot-gap)*0.66 - var(--wiggle-y)); }
+  50%  { background-position: calc(var(--wiggle-x) * -1) calc(var(--wiggle-y) * -1), calc(var(--dot-gap)/2 + var(--wiggle-x)) calc(var(--dot-gap)/2 - var(--wiggle-y)), calc(var(--dot-gap)*0.33 - var(--wiggle-x)) calc(var(--dot-gap)*0.66 + var(--wiggle-y)); }
+  75%  { background-position: var(--wiggle-x) calc(var(--wiggle-y) * -0.6), calc(var(--dot-gap)/2 - var(--wiggle-x)) calc(var(--dot-gap)/2 - var(--wiggle-y)), calc(var(--dot-gap)*0.33 + var(--wiggle-x)) calc(var(--dot-gap)*0.66 + var(--wiggle-y)); }
+  100% { background-position: 0px 0px, calc(var(--dot-gap)/2) calc(var(--dot-gap)/2), calc(var(--dot-gap)*0.33) calc(var(--dot-gap)*0.66); }
+}
+
+/* Accent Utilities */
+.accent { color: var(--accent); font-weight: bold; }
+.accent-2 { color: var(--accent-2); font-weight: bold; }
+.accent-3 { color: var(--accent-3); font-weight: bold; }
+.muted-strong { color: var(--muted-strong); font-weight: 500; }
+
+/* Callout Box - Matching User Style */
+.callout {
+  border-left: 4px solid #FF4500;
+  padding: 10px 15px;
+  margin: 15px 0;
+  background-color: transparent;
+}
+.callout .label {
+  color: #FF4500;
+  font-weight: bold;
+}
+
+/* Custom List Styling */
+.prose ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-position: inside;
+  list-style-type: disc;
+}
+.prose li {
+  margin-bottom: 5px;
+}
+
+/* MDX Editor Overrides */
+.prose {
+  color: var(--foreground);
+}
+.prose strong {
+  color: var(--foreground);
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--foreground);
+}
+.prose em {
+  color: #2EC4B6; /* Teal */
+  font-style: italic;
 }
