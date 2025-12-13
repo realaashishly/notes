@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Set Theory</title>
+    <style>
+      /* --- General Layout --- */
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0; /* Light Gray text */
+
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        /* padding: 40px 20px; */
+      }
+
+      /* --- Typography --- */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        border-bottom: 3px solid #333;
+        padding-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+        border-left: 5px solid #ff9800; /* Bright Orange accent */
+        padding-left: 15px;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #b0bec5; /* Blue-Grey for subheaders */
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-style: italic;
+        color: #90a4ae;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      /* --- List Styling --- */
+      ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style-position: outside;
+      }
+
+      li {
+        margin-bottom: 8px;
+        color: #cfd8dc;
+      }
+
+      /* --- HIGHLIGHTING SYSTEM (Dark Mode) --- */
+
+      /* Strategy: Use RGBA for backgrounds to keep them subtle.
+           Use bright pastel colors for text to ensure contrast.
+        */
+
+      /* Level 1: Very Important (Background Highlight) */
+      .bg-red {
+        background-color: rgba(229, 57, 53, 0.2); /* Semi-transparent Red */
+        color: #ff8a80; /* Light Salmon */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(229, 57, 53, 0.3);
+      }
+
+      .bg-blue {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #82b1ff; /* Light Blue */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+      }
+
+      .bg-green {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #b9f6ca; /* Mint Green */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
+
+      .bg-purple {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #ea80fc; /* Light Purple */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(156, 39, 176, 0.3);
+      }
+
+      .bg-orange {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #ffd180; /* Light Orange */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 152, 0, 0.3);
+      }
+
+      .bg-teal {
+        background-color: rgba(0, 150, 136, 0.2);
+        color: #a7ffeb; /* Aqua */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 150, 136, 0.3);
+      }
+
+      /* Level 2: Less Important (Text Color Only - Pastels) */
+      .text-red {
+        color: #ef9a9a;
+        font-weight: 600;
+      }
+      .text-blue {
+        color: #90caf9;
+        font-weight: 600;
+      }
+      .text-green {
+        color: #a5d6a7;
+        font-weight: 600;
+      }
+      .text-purple {
+        color: #ce93d8;
+        font-weight: 600;
+      }
+      .text-orange {
+        color: #ffcc80;
+        font-weight: 600;
+      }
+      .text-teal {
+        color: #80cbc4;
+        font-weight: 600;
+      }
+      .text-indigo {
+        color: #9fa8da;
+        font-weight: 600;
+      }
+      .text-pink {
+        color: #f48fb1;
+        font-weight: 600;
+      }
+      .text-cyan {
+        color: #81d4fa;
+        font-weight: 600;
+      }
+      .text-brown {
+        color: #bcaaa4;
+        font-weight: 600;
+      }
+
+      /* --- Callout Box (Dark Mode) --- */
+      .example-box {
+        background-color: #1e1e1e; /* Slightly lighter than body */
+        border-left: 4px solid #ffd54f; /* Bright Amber */
+        padding: 10px 15px;
+        margin: 10px 0 25px 0;
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .example-label {
+        font-weight: bold;
+        color: #ffd54f; /* Matching border color */
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-right: 5px;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333; /* Dark divider */
+        margin: 40px 0;
+      }
+
+      .diagram {
+        width: 100%;
+        height: auto;
+        border: 1px solid #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        padding: 10px;
+        overflow: hidden;
+
+      }
+
+      .diagram-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 20px;
+        align-items: center;
+
+      }
+    </style>
+
+</head>
+
+<body>
+<h1>Fundamentals of Sets</h1>
+
+    <h2>Representation of Sets</h2>
+    <p>
+        Sets are a collection of well-defined objects. There are two main ways to represent them:
+    </p>
+
+    <h3>1. Roster Form (Tabular Method)</h3>
+    <ul>
+        <li>In this method, a set is described by <span class="bg-blue">listing elements</span>, separated by commas, within curly braces.</li>
+        <li>It is useful for <span class="text-blue">finite and small sets</span>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3, 4, 5}
+    </div>
+
+    <hr>
+
+    <h3>2. Set-Builder Form</h3>
+    <ul>
+        <li>In this method, a set is described by a <span class="bg-green">characterizing property</span> common to all its elements.</li>
+        <li>It is useful for <span class="text-green">infinite or large sets</span> where listing is impossible.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = { x : x ∈ N, x < 6 } <br>
+        <span style="font-size: 0.9em; color: #888;">(Read as: "Set A is the set of all x such that x is a Natural number and x is less than 6")</span>
+    </div>
+
+    <h1>Types of Sets</h1>
+    <p>
+        Sets are classified based on the <span class="text-blue">number of elements</span> they contain or their relationship with other sets.
+    </p>
+
+
+
+    <h3>1. Empty Set (Null or Void Set)</h3>
+    <ul>
+        <li>A set containing <span class="bg-red">no elements</span>.</li>
+        <li>Denoted by the symbol <strong>&empty;</strong> (phi) or <strong>{}</strong>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> Set of odd numbers divisible by 2 = {}
+    </div>
+
+    <hr>
+
+    <h3>2. Singleton Set</h3>
+    <ul>
+        <li>A set containing <span class="bg-blue">only one element</span>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = { 5 } (Only one number)
+    </div>
+
+    <hr>
+
+    <h3>3. Finite Set</h3>
+    <ul>
+        <li>A set with a <span class="bg-green">countable number of elements</span>.</li>
+        <li>The process of counting elements comes to an end.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = { 1, 2, 3, 4, 5 } (Finite)
+    </div>
+
+    <hr>
+
+    <h3>4. Infinite Set</h3>
+    <ul>
+        <li>A set with an <span class="bg-purple">uncountable number of elements</span>.</li>
+        <li>The counting process never ends.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> Set of all natural numbers N = { 1, 2, 3, ... }
+    </div>
+
+    <hr>
+
+    <h3>5. Equal Sets</h3>
+    <ul>
+        <li>Two sets A and B are equal if they have <span class="bg-orange">exactly the same elements</span>.</li>
+        <li>Order does not matter.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3} and B = {3, 1, 2} &rarr; <strong>A = B</strong>
+    </div>
+
+    <hr>
+
+    <h3>6. Equivalent Sets</h3>
+    <ul>
+        <li>Two sets are equivalent if they have the <span class="bg-teal">same number of elements</span> (same cardinality).</li>
+        <li>The actual items can be different.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3} and B = {a, b, c} &rarr; Both have 3 elements.
+    </div>
+
+    <hr>
+
+    <h3>7. Subset</h3>
+    <ul>
+        <li>Set A is a subset of Set B if <span class="bg-blue">every element of A is also in B</span>.</li>
+        <li>Symbol: <strong>A &subseteq; B</strong></li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2} and B = {1, 2, 3}. Here, A &subseteq; B.
+    </div>
+
+    <hr>
+
+    <h3>8. Universal Set</h3>
+    <ul>
+        <li>A set that contains <span class="bg-purple">all sets under consideration</span>.</li>
+        <li>Usually denoted by <strong>U</strong>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> If A = {1, 2} and B = {3, 4}, then U could be {1, 2, 3, 4, 5, 6...}
+    </div>
+    <h1>Power Sets & Subsets</h1>
+
+    <h3>1. Proper Subset</h3>
+    <ul>
+        <li>Set A is a <span class="bg-blue">proper subset</span> of Set B if every element of A is in B, but <span class="text-blue">A is not equal to B</span> (B has at least one extra element).</li>
+        <li>Symbol: <strong>A &subset; B</strong></li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2} and B = {1, 2, 3}<br>
+        Since all elements of A are in B, and A &ne; B, then <strong>A &subset; B</strong>.
+    </div>
+
+    <hr>
+
+    <h3>2. Number of Subsets</h3>
+    <ul>
+        <li>If a set has <span class="bg-green">n elements</span>, the total number of possible subsets is calculated using the formula:</li>
+        <li style="font-size: 1.2em; font-weight: bold; margin: 10px 0; color: #B9F6CA;">2<sup>n</sup></li>
+    </ul>
+
+
+
+    <div class="example-box">
+        <span class="example-label">Example</span> Let A = {1, 2, 3} (Here, n=3)<br>
+        Total Subsets = 2<sup>3</sup> = <strong>8</strong><br>
+        <span style="font-size: 0.9em; color: #888;">The subsets are: {}, {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3}</span>
+    </div>
+
+    <hr>
+
+    <h3>3. Power Set</h3>
+    <ul>
+        <li>The collection of <span class="bg-purple">all possible subsets</span> of a set A is called the Power Set of A.</li>
+        <li>It is denoted by <strong>P(A)</strong>.</li>
+        <li>The power set always includes the <span class="text-purple">empty set</span> and the <span class="text-purple">set itself</span>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> Let A = {a, b}<br>
+        Subsets: {}, {a}, {b}, {a, b}<br>
+        <strong>P(A) = { {}, {a}, {b}, {a, b} }</strong>
+    </div>
+    <h1>Operations on Sets</h1>
+    <p>
+        Operations on sets allow us to combine, compare, and modify sets to form new ones. These are commonly visualized using <span class="text-blue">Venn Diagrams</span>.
+    </p>
+
+    <h3>1. Union of Sets</h3>
+    <ul>
+        <li>The union of sets A and B contains <span class="bg-blue">all elements</span> that are in set A, in set B, or in both.</li>
+        <li>Symbol: <strong>A &cup; B</strong> (Read as "A union B")</li>
+    </ul>
+
+    <img src="/maths/1.jpeg" alt="union of sets" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2} and B = {2, 3}<br>
+        <strong>A &cup; B = {1, 2, 3}</strong> (Common elements are written once)
+    </div>
+
+    <hr>
+
+    <h3>2. Intersection of Sets</h3>
+    <ul>
+        <li>The intersection of sets A and B contains only the <span class="bg-green">common elements</span> that are present in both sets.</li>
+        <li>Symbol: <strong>A &cap; B</strong> (Read as "A intersection B")</li>
+        <li>If there are no common elements, the intersection is an <span class="text-green">Empty Set (&empty;)</span>.</li>
+    </ul>
+
+    <img src="/maths/2.jpeg" alt="intersection of sets" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3} and B = {3, 4, 5}<br>
+        <strong>A &cap; B = {3}</strong>
+    </div>
+
+    <hr>
+
+    <h3>3. Difference of Sets</h3>
+    <ul>
+        <li>The difference of sets A and B (A - B) creates a set of elements that <span class="bg-orange">belong to A but NOT to B</span>.</li>
+        <li>Basically, you remove any element from A that also exists in B.</li>
+        <li>Symbol: <strong>A - B</strong></li>
+    </ul>
+
+    <img src="/maths/3.jpeg" alt="difference of sets" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3, 4} and B = {3, 4, 5}<br>
+        <strong>A - B = {1, 2}</strong> (Removed 3 and 4 because they are in B)<br>
+        <strong>B - A = {5}</strong> (Removed 3 and 4 because they are in A)
+    </div>
+
+    <hr>
+
+    <h3>4. Complement of a Set</h3>
+    <ul>
+        <li>The complement of a set A is the set of all elements in the <span class="bg-purple">Universal Set (U)</span> that are <span class="text-purple">NOT in A</span>.</li>
+        <li>Symbol: <strong>A'</strong> or <strong>A<sup>c</sup></strong></li>
+        <li>Formula: <strong>A' = U - A</strong></li>
+    </ul>
+
+    <img src="/maths/4.jpeg" alt="complement of a set" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> U = {1, 2, 3, 4, 5} and A = {1, 2}<br>
+        <strong>A' = {3, 4, 5}</strong> (Everything in U except 1 and 2)
+    </div>
+
+    <hr>
+
+    <h3>5. Disjoint Sets</h3>
+    <ul>
+        <li>Two sets are disjoint if they have <span class="bg-red">no elements in common</span>.</li>
+        <li>Their intersection is empty: <strong>A &cap; B = &empty;</strong></li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 3, 5} (Odd) and B = {2, 4, 6} (Even)<br>
+        Intersection is <strong>{}</strong> (Null set).
+    </div>
+    <h1>Advanced Set Operations</h1>
+
+    <h3>1. Symmetric Difference of Two Sets</h3>
+    <ul>
+        <li>The symmetric difference of sets A and B contains elements that are <span class="bg-orange">in either A or B, but NOT in both</span>.</li>
+        <li>It excludes the common intersection part.</li>
+        <li>Symbol: <strong>A &Delta; B</strong> or <strong>A &oplus; B</strong></li>
+        <li>Formula: <strong>A &Delta; B = (A - B) &cup; (B - A)</strong></li>
+    </ul>
+
+    <img src="/maths/5.jpeg" alt="venn diagram of symmetric difference of two sets" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2, 3} and B = {3, 4, 5}<br>
+        A - B = {1, 2} <br>
+        B - A = {4, 5} <br>
+        <strong>A &Delta; B = {1, 2, 4, 5}</strong> (All elements except the common '3')
+    </div>
+
+    <hr>
+
+    <h3>2. Cartesian Product of Sets</h3>
+    <ul>
+        <li>The Cartesian product of two sets A and B is the set of all possible <span class="bg-blue">ordered pairs</span> (a, b), where 'a' belongs to A and 'b' belongs to B.</li>
+        <li>Symbol: <strong>A &times; B</strong> (Read as "A cross B")</li>
+        <li><strong>Order Matters:</strong> (a, b) is not the same as (b, a). Therefore, usually <strong>A &times; B &ne; B &times; A</strong>.</li>
+        <li>If Set A has <span class="text-blue">m elements</span> and Set B has <span class="text-blue">n elements</span>, then A &times; B has <strong>m &times; n</strong> elements.</li>
+    </ul>
+
+    <img src="/maths/6.jpeg" alt="cartesian product mapping diagram" class="diagram">
+
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {1, 2} and B = {x, y}<br>
+        <strong>A &times; B = { (1, x), (1, y), (2, x), (2, y) }</strong>
+    </div>
+
+    <h1>Algebra of Sets (Laws of Sets)</h1>
+    <p>
+        Just like numbers have rules for addition and multiplication, sets have standard laws that govern their operations. These are essential for <span class="text-blue">simplifying set expressions</span>.
+    </p>
+
+    <h3>1. Idempotent Laws</h3>
+    <ul>
+        <li>The union or intersection of a set with <span class="bg-red">itself</span> results in the set itself.</li>
+    </ul>
+    <div class="example-box">
+        A &cup; A = <strong>A</strong> <br>
+        A &cap; A = <strong>A</strong>
+    </div>
+
+    <hr>
+
+    <h3>2. Identity Laws</h3>
+    <ul>
+        <li>These laws define how a set interacts with the <span class="bg-blue">Empty Set (&empty;)</span> and the <span class="bg-blue">Universal Set (U)</span>.</li>
+    </ul>
+    <div class="example-box">
+        A &cup; &empty; = <strong>A</strong> <br>
+        A &cap; U = <strong>A</strong>
+    </div>
+
+    <hr>
+
+    <h3>3. Commutative Laws</h3>
+    <ul>
+        <li>The <span class="bg-green">order of sets</span> does not change the result.</li>
+        <li>This applies to both Union and Intersection.</li>
+    </ul>
+    <div class="example-box">
+        A &cup; B = <strong>B &cup; A</strong> <br>
+        A &cap; B = <strong>B &cap; A</strong>
+    </div>
+
+    <hr>
+
+    <h3>4. Associative Laws</h3>
+    <ul>
+        <li>The <span class="bg-purple">grouping of sets</span> (using brackets) does not change the result if the operation is the same.</li>
+    </ul>
+    <div class="example-box">
+        (A &cup; B) &cup; C = <strong>A &cup; (B &cup; C)</strong> <br>
+        (A &cap; B) &cap; C = <strong>A &cap; (B &cap; C)</strong>
+    </div>
+
+    <hr>
+
+    <h3>5. Distributive Laws</h3>
+    <ul>
+        <li>Describes how Union and Intersection <span class="bg-orange">distribute over each other</span>.</li>
+        <li>This is similar to how multiplication distributes over addition: a(b + c) = ab + ac.</li>
+    </ul>
+
+    <div class="diagram-container">
+        <img src="/maths/8.png" alt="venn diagram of distributive property of sets" class="diagram">
+        <img src="/maths/7.png" alt="venn diagram of distributive property of sets" class="diagram">
+    </div>
+
+    <div class="example-box">
+        <span class="text-orange">Union over Intersection:</span><br>
+        A &cup; (B &cap; C) = <strong>(A &cup; B) &cap; (A &cup; C)</strong><br><br>
+        <span class="text-orange">Intersection over Union:</span><br>
+        A &cap; (B &cup; C) = <strong>(A &cap; B) &cup; (A &cap; C)</strong>
+    </div>
+
+    <hr>
+
+    <h3>6. De Morgan’s Laws</h3>
+    <ul>
+        <li>Crucial for dealing with <span class="bg-teal">complements</span>.</li>
+        <li>Basically: The complement of a union is the intersection of complements (and vice versa). The <span class="text-teal">sign flips</span>.</li>
+    </ul>
+
+
+
+    <div class="example-box">
+        (A &cup; B)' = <strong>A' &cap; B'</strong> <br>
+        (A &cap; B)' = <strong>A' &cup; B'</strong>
+    </div>
+
+    <h1>Cardinal Number & Inclusion-Exclusion</h1>
+
+    <h3>1. Cardinal Number of a Set</h3>
+    <ul>
+        <li>The cardinal number represents the <span class="bg-blue">total number of distinct elements</span> present in a finite set.</li>
+        <li>It is denoted by <strong>n(A)</strong> or <strong>|A|</strong>.</li>
+        <li>It only applies to <span class="text-blue">finite sets</span>.</li>
+    </ul>
+    <div class="example-box">
+        <span class="example-label">Example</span> A = {a, e, i, o, u}<br>
+        Since there are 5 elements, <strong>n(A) = 5</strong>.
+    </div>
+
+    <hr>
+
+    <h3>2. The Inclusion-Exclusion Principle</h3>
+    <p>
+        This principle is used to calculate the <span class="bg-green">cardinality of the union</span> of sets. It prevents "double counting" of common elements.
+    </p>
+
+
+
+    <h4>a. For Two Sets (A and B)</h4>
+    <ul>
+        <li>When adding n(A) and n(B), the intersection (common part) is counted <span class="text-red">twice</span>.</li>
+        <li>To correct this, we <span class="text-green">subtract the intersection</span> once.</li>
+    </ul>
+    <div class="example-box" style="font-size: 1.1em;">
+        <strong>n(A &cup; B) = n(A) + n(B) - n(A &cap; B)</strong>
+    </div>
+
+    <h4>b. For Three Sets (A, B, and C)</h4>
+    <ul>
+        <li>The formula extends to three sets by adding individual sizes, subtracting pair intersections, and adding back the intersection of all three.</li>
+    </ul>
+    <div class="example-box">
+        <strong>n(A &cup; B &cup; C) = </strong><br>
+        n(A) + n(B) + n(C) <br>
+        - n(A &cap; B) - n(B &cap; C) - n(A &cap; C) <br>
+        + n(A &cap; B &cap; C)
+    </div>
+
+    <h4>c. For Disjoint Sets</h4>
+    <ul>
+        <li>If sets have <span class="bg-purple">no common elements</span> (intersection is zero), the formula simplifies.</li>
+    </ul>
+    <div class="example-box">
+        <strong>n(A &cup; B) = n(A) + n(B)</strong>
+    </div>
+    <h1>Important Formulas</h1>
+
+    <h3>1. Subsets & Power Sets</h3>
+    <p>If a set A has <span class="text-blue">n elements</span>:</p>
+    
+    <ul><li>Total number of Subsets:</li></ul>
+    <div class="example-box">
+        2<sup>n</sup>
+    </div>
+
+    <ul><li>Total number of Proper Subsets:</li></ul>
+    <div class="example-box">
+        2<sup>n</sup> - 1
+    </div>
+
+    <ul><li>Number of elements in Power Set P(A):</li></ul>
+    <div class="example-box">
+        n[P(A)] = 2<sup>n</sup>
+    </div>
+
+    <h3>2. Basic Set Operations</h3>
+    
+    <div class="example-box" style="border-left-color: #2196F3;">
+        <span class="text-blue">Union:</span> A &cup; B = {x : x &in; A or x &in; B}
+    </div>
+
+    <div class="example-box" style="border-left-color: #4CAF50;">
+        <span class="text-green">Intersection:</span> A &cap; B = {x : x &in; A and x &in; B}
+    </div>
+
+    <div class="example-box" style="border-left-color: #FF9800;">
+        <span class="text-orange">Difference:</span> A - B = {x : x &in; A and x &notin; B}
+    </div>
+
+    <div class="example-box" style="border-left-color: #9C27B0;">
+        <span style="color: #CE93D8;">Complement:</span> A' = U - A
+    </div>
+
+    <div class="example-box" style="border-left-color: #F44336;">
+        <span style="color: #EF9A9A;">Symmetric Diff:</span> A &Delta; B = (A - B) &cup; (B - A)
+    </div>
+
+    <h3>3. Algebra of Sets (Laws)</h3>
+    
+    <h4>De Morgan's Laws (Important)</h4>
+    <div class="example-box">
+        (A &cup; B)' = A' &cap; B'<br>
+        (A &cap; B)' = A' &cup; B'
+    </div>
+
+    <h4>Distributive Laws</h4>
+    <div class="example-box">
+        A &cup; (B &cap; C) = (A &cup; B) &cap; (A &cup; C)<br>
+        A &cap; (B &cup; C) = (A &cap; B) &cup; (A &cap; C)
+    </div>
+
+    <h3>4. Cardinality Formulas (Inclusion-Exclusion)</h3>
+
+    <h4>For Two Sets (A and B)</h4>
+    <div class="example-box">
+        n(A &cup; B) = n(A) + n(B) - n(A &cap; B)
+    </div>
+    <ul>
+        <li>If sets are disjoint: <span class="text-green">n(A &cup; B) = n(A) + n(B)</span></li>
+        <li>Elements in exactly one set: <span class="text-green">n(A) + n(B) - 2n(A &cap; B)</span></li>
+    </ul>
+
+    <h4>For Three Sets (A, B, and C)</h4>
+    <div class="example-box">
+        n(A &cup; B &cup; C) = 
+        n(A) + n(B) + n(C) 
+        - n(A &cap; B) - n(B &cap; C) - n(A &cap; C)
+        + n(A &cap; B &cap; C)
+    </div>
+
+    <h3>5. Cartesian Product</h3>
+    <p>If n(A) = p and n(B) = q, then:</p>
+    
+    <div class="example-box">
+        n(A &times; B) = p &times; q
+    </div>
+    
+    <ul><li>Total number of subsets (relations) from A to B:</li></ul>
+    <div class="example-box">
+        2<sup>pq</sup>
+    </div>
+
+</body>
+</html>
