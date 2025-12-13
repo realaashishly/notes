@@ -20,9 +20,10 @@ export default async function NotePage({ params }: PageProps) {
     <>
       <div className="min-h-screen p-8 transition-colors duration-500">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-12 text-center border-b border-black/10 dark:border-white/10 pb-8">
-            <div className="text-4xl md:text-5xl font-bold capitalize mb-4 bg-clip-text text-transparent bg-gradient-to-r from-black via-black to-black/60 dark:from-white dark:via-white dark:to-white/60">
+          <div className="mb-12 text-center border-black/10 dark:border-white/10 pb-8">
+            <div className="relative bg-[#9d6381] text-4xl md:text-5xl font-bold capitalize mb-4 ">
               {note.replace(/-/g, ' ')}
+              <span className='absolute -bottom-5 left-0 w-full h-[2px] bg-black dark:bg-white'></span>
             </div>
           </div>
           
