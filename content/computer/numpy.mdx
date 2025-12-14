@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Machine Learning Notes</title>
+    <style>
+      /* --- General Layout --- */
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0; /* Light Gray text */
+
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        /* padding: 40px 20px; */
+      }
+
+      /* --- Typography --- */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        border-bottom: 3px solid #333;
+        padding-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+        border-left: 5px solid #ff9800; /* Bright Orange accent */
+        padding-left: 15px;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #b0bec5; /* Blue-Grey for subheaders */
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-style: italic;
+        color: #90a4ae;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      /* --- List Styling --- */
+      ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style-position: outside;
+      }
+
+      li {
+        margin-bottom: 8px;
+        color: #cfd8dc;
+      }
+
+      /* --- HIGHLIGHTING SYSTEM (Dark Mode) --- */
+
+      /* Strategy: Use RGBA for backgrounds to keep them subtle.
+           Use bright pastel colors for text to ensure contrast.
+        */
+
+      /* Level 1: Very Important (Background Highlight) */
+      .bg-red {
+        background-color: rgba(229, 57, 53, 0.2); /* Semi-transparent Red */
+        color: #ff8a80; /* Light Salmon */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(229, 57, 53, 0.3);
+      }
+
+      .bg-blue {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #82b1ff; /* Light Blue */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+      }
+
+      .bg-green {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #b9f6ca; /* Mint Green */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
+
+      .bg-purple {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #ea80fc; /* Light Purple */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(156, 39, 176, 0.3);
+      }
+
+      .bg-orange {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #ffd180; /* Light Orange */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 152, 0, 0.3);
+      }
+
+      .bg-teal {
+        background-color: rgba(0, 150, 136, 0.2);
+        color: #a7ffeb; /* Aqua */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 150, 136, 0.3);
+      }
+
+      /* Level 2: Less Important (Text Color Only - Pastels) */
+      .text-red {
+        color: #ef9a9a;
+        font-weight: 600;
+      }
+      .text-blue {
+        color: #90caf9;
+        font-weight: 600;
+      }
+      .text-green {
+        color: #a5d6a7;
+        font-weight: 600;
+      }
+      .text-purple {
+        color: #ce93d8;
+        font-weight: 600;
+      }
+      .text-orange {
+        color: #ffcc80;
+        font-weight: 600;
+      }
+      .text-teal {
+        color: #80cbc4;
+        font-weight: 600;
+      }
+      .text-indigo {
+        color: #9fa8da;
+        font-weight: 600;
+      }
+      .text-pink {
+        color: #f48fb1;
+        font-weight: 600;
+      }
+      .text-cyan {
+        color: #81d4fa;
+        font-weight: 600;
+      }
+      .text-brown {
+        color: #bcaaa4;
+        font-weight: 600;
+      }
+
+      /* --- Callout Box (Dark Mode) --- */
+      .example-box {
+        background-color: #1e1e1e; /* Slightly lighter than body */
+        border-left: 4px solid #ffd54f; /* Bright Amber */
+        padding: 10px 15px;
+        margin: 10px 0 25px 0;
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .example-label {
+        font-weight: bold;
+        color: #ffd54f; /* Matching border color */
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-right: 5px;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333; /* Dark divider */
+        margin: 40px 0;
+      }
+
+      .diagram {
+        width: 100%;
+        height: auto;
+        border: 1px solid #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        padding: 10px;
+        overflow: hidden;
+
+      }
+
+     c
+
+      .code-block {
+        background-color: #000000;
+        border: 1px solid #333;
+        border-left: 4px solid #4caf50; /* Green accent for code */
+        color: #a5d6a7; /* Light green text */
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        padding: 15px;
+        margin: 10px 0 20px 0;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 0.9rem;
+      }
+      .comment {
+        color: #757575; /* Grey for comments */
+        font-style: italic;
+      }
+    </style>
+
+</head>
+<body>
+
+<h1>NumPy UltraQuick Tutorial</h1>
+    <p>
+      <span class="bg-blue">NumPy</span> is a Python library for creating and
+      manipulating <span class="text-blue">matrices</span>, the main data
+      structure used by ML algorithms. Matrices are mathematical objects used to
+      store values in rows and columns.
+    </p>
+
+    
+
+    <h3>Terminology</h3>
+    <ul>
+      <li><strong>Python</strong> calls matrices <span class="text-red">lists</span>.</li>
+      <li><strong>NumPy</strong> calls them <span class="text-green">arrays</span>.</li>
+      <li><strong>TensorFlow</strong> calls them <span class="text-purple">tensors</span>.</li>
+    </ul>
+
+    <hr />
+
+    <h2>1. Import NumPy Module</h2>
+    <p>Run the following code cell to import the NumPy module:</p>
+    <div class="code-block">import numpy as np</div>
+
+    <hr />
+
+    <h2>2. Populate Arrays</h2>
+    <h3>Specific Numbers</h3>
+    <p>
+      Call <span class="bg-green">np.array</span> to create a NumPy array with
+      your own hand-picked values.
+    </p>
+
+    <div class="code-block">
+      <span class="comment"># One-dimensional array</span><br />
+      one_dimensional_array = np.array([1.2, 2.4, 3.5, 4.7, 6.1, 7.2, 8.3, 9.5])<br />
+      print(one_dimensional_array)
+    </div>
+
+    <p>
+      To create a <span class="text-green">two-dimensional array</span>, specify
+      an extra layer of square brackets.
+    </p>
+
+    <div class="code-block">
+      <span class="comment"># Two-dimensional array (3x2)</span><br />
+      two_dimensional_array = np.array([[6, 5], [11, 7], [4, 8]])<br />
+      print(two_dimensional_array)
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Tip</span> To populate an array with all
+      zeros, call <strong>np.zeros</strong>. For all ones, call
+      <strong>np.ones</strong>.
+    </div>
+
+    <hr />
+
+    <h3>Sequences of Numbers</h3>
+    <p>
+      You can populate an array with a sequence using
+      <span class="bg-purple">np.arange</span>.
+    </p>
+
+    <div class="code-block">
+      sequence_of_integers = np.arange(5, 12)<br />
+      print(sequence_of_integers)
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Note</span> np.arange includes the
+      <span class="text-purple">lower bound (5)</span> but
+      <span class="text-red">not the upper bound (12)</span>.
+    </div>
+
+    <hr />
+
+    <h3>Random Numbers</h3>
+    <p>
+      NumPy provides various functions to populate arrays with random numbers
+      across certain ranges.
+    </p>
+    <ul>
+      <li>
+        <span class="bg-orange">np.random.randint</span>: Generates random
+        integers between a low and high value.
+      </li>
+      <li>
+        <span class="bg-teal">np.random.random</span>: Generates random
+        floating-point values between 0.0 and 1.0.
+      </li>
+    </ul>
+
+    <div class="code-block">
+      <span class="comment"># Random integers between 50 and 100</span><br />
+      random_integers_between_50_and_100 = np.random.randint(low=50, high=101,
+      size=(6,))<br />
+      print(random_integers_between_50_and_100)
+    </div>
+
+    <div class="code-block">
+      <span class="comment"># Random floats between 0.0 and 1.0</span><br />
+      random_floats_between_0_and_1 = np.random.random((6,))<br />
+      print(random_floats_between_0_and_1)
+    </div>
+
+    <hr />
+
+    <h2>3. Mathematical Operations & Broadcasting</h2>
+    <p>
+      If you want to add, subtract, or multiply two arrays, linear algebra
+      usually requires operands to have compatible dimensions.
+    </p>
+    <p>
+      NumPy uses a trick called <span class="bg-red">Broadcasting</span> to
+      virtually expand the smaller operand to dimensions compatible for linear
+      algebra.
+    </p>
+
+    
+
+    <div class="code-block">
+      <span class="comment"># Adds 2.0 to every item in the array</span><br />
+      random_floats_between_2_and_3 = random_floats_between_0_and_1 + 2.0<br />
+      print(random_floats_between_2_and_3)
+    </div>
+
+    <div class="code-block">
+      <span class="comment"># Multiplies each cell in the array by 3</span><br />
+      random_integers_between_150_and_300 = random_integers_between_50_and_100 *
+      3<br />
+      print(random_integers_between_150_and_300)
+    </div>
+
+    <hr />
+    <br />
+
+    <h1>Tasks</h1>
+
+    <h3>Task 1: Create a Linear Dataset</h3>
+    <p>
+      <strong>Goal:</strong> Create a simple dataset consisting of a single
+      feature and a label.
+    </p>
+    <ul>
+      <li>
+        Assign a sequence of integers from 6 to 20 (inclusive) to an array named
+        <span class="text-blue">feature</span>.
+      </li>
+      <li>
+        Assign 15 values to an array named
+        <span class="text-blue">label</span> such that:
+        <span class="bg-purple">label = (3)(feature) + 4</span>
+      </li>
+    </ul>
+
+    <div class="code-block">
+      feature = np.arange(6, 21)<br />
+      print(feature)<br />
+      label = (feature * 3) + 4<br />
+      print(label)
+    </div>
+
+    <hr />
+
+    <h3>Task 2: Add Some Noise</h3>
+    <p>
+      To make the dataset realistic, modify each value assigned to label by
+      adding a different <span class="text-orange">random floating-point value</span> 
+      between -2 and +2.
+    </p>
+    <div class="example-box">
+      <span class="example-label">Constraint</span> Don't rely on broadcasting.
+      Create a noise array having the same dimension as label.
+    </div>
+
+    <div class="code-block">
+      noise = (np.random.random((15,)) * 4) - 2<br />
+      print(noise)<br />
+      label = label + noise<br />
+      print(label)
+    </div>
+
+</body>
+</html>

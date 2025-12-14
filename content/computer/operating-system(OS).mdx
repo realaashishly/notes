@@ -207,6 +207,32 @@
         overflow: hidden;
 
       }
+
+       .diagram-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 20px;
+        align-items: center;
+
+      }
+
+       .code-block {
+        background-color: #000000;
+        border: 1px solid #333;
+        border-left: 4px solid #4caf50; /* Green accent for code */
+        color: #a5d6a7; /* Light green text */
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        padding: 15px;
+        margin: 10px 0 20px 0;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 0.9rem;
+      }
+      .comment {
+        color: #757575; /* Grey for comments */
+        font-style: italic;
+      }
     </style>
 
   </head>
@@ -531,8 +557,7 @@
       cannot do directly.
     </p>
     <p>
-      They act as a{" "}
-      <span class="text-orange">bridge between user programs and the OS</span>.
+      They act as a <span class="text-orange">bridge between user programs and the OS</span>.
     </p>
 
     <h2>Why System Calls Are Needed?</h2>
@@ -1027,6 +1052,1476 @@
             </tr>
         </tbody>
     </table>
+
+    <br>
+    <h1>Process Control Block (PCB)</h1>
+    <p>
+      The <span class="bg-red">Process Control Block (PCB)</span> is a data
+      structure used by the Operating System to store all the information about
+      a specific process.
+    </p>
+    <p>
+      It is often called the <span class="text-red">"brain" of the process</span>
+      because it contains everything the OS needs to know to manage that process.
+      Every process has its own unique PCB.
+    </p>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Also Known As</span> Task Control Block (TCB).
+    </div>
+
+    <h2>Role of the PCB</h2>
+    <ul>
+      <li>
+        <span class="bg-blue">Created</span> when a process is started (forked).
+      </li>
+      <li>
+        <span class="bg-red">Stored</span> in the kernel memory (protected area).
+      </li>
+      <li>
+        <span class="bg-green">Deleted</span> when the process terminates.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>Components of PCB</h2>
+    <p>
+      The PCB contains many attributes. The most critical ones are listed below:
+    </p>
+
+    <h3>1. Process ID (PID)</h3>
+    <ul>
+      <li>
+        A <span class="text-blue">unique identification number</span> assigned to
+        each process to distinguish it from others.
+      </li>
+    </ul>
+
+    <h3>2. Process State</h3>
+    <ul>
+      <li>
+        Indicates the <span class="bg-orange">current status</span> of the process.
+      </li>
+      <li>
+        Examples: <span class="text-orange">New, Ready, Running, Waiting, Terminated</span>.
+      </li>
+    </ul>
+
+    <h3>3. Program Counter (PC)</h3>
+    <ul>
+      <li>
+        Stores the <span class="bg-green">address of the next instruction</span>
+        to be executed by the process.
+      </li>
+      <li>
+        Crucial for resuming a process after a context switch.
+      </li>
+    </ul>
+
+    <h3>4. CPU Registers</h3>
+    <ul>
+      <li>
+        Includes accumulators, index registers, and stack pointers.
+      </li>
+      <li>
+        This data must be saved when an interrupt occurs so the process can
+        resume correctly later.
+      </li>
+    </ul>
+
+    <h3>5. CPU Scheduling Information</h3>
+    <ul>
+      <li>
+        Contains <span class="text-purple">process priority</span>, pointers to
+        scheduling queues, and other scheduling parameters.
+      </li>
+    </ul>
+
+    <h3>6. Memory Management Information</h3>
+    <ul>
+      <li>
+        Includes information about <span class="text-teal">page tables</span>,
+        segment tables, and the value of base and limit registers.
+      </li>
+    </ul>
+
+    <h3>7. I/O Status Information</h3>
+    <ul>
+      <li>
+        A list of <span class="text-brown">I/O devices allocated</span> to the
+        process (e.g., tape drives) and a list of open files.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>PCB in Context Switching</h2>
+    <p>
+      When the CPU switches from one process (P1) to another (P2), the OS must:
+    </p>
+    <ol>
+      <li>
+        <span class="bg-red">Save the state</span> of P1 into its PCB.
+      </li>
+      <li>
+        <span class="bg-green">Load the state</span> of P2 from its PCB.
+      </li>
+    </ol>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Note</span> Context switching adds overhead
+      because saving and loading PCBs takes time.
+    </div>
+
+    <br />
+
+    <h1>Process States</h1>
+    <p>
+      As a process executes, it changes its <span class="bg-blue">state</span>.
+      The state of a process is defined by the current activity of that process.
+    </p>
+    <p>
+      A typical process goes through <span class="text-blue">five different states</span>
+      during its lifecycle.
+    </p>
+
+
+
+
+    <h2>The 5 Process States</h2>
+
+    <h3>1. New (Creation)</h3>
+    <ul>
+      <li>
+        The process is <span class="bg-green">being created</span>.
+      </li>
+      <li>
+        It resides in secondary memory (Hard Disk) and has not yet been loaded
+        into the main memory (RAM).
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Ready</h3>
+    <ul>
+      <li>
+        The process is loaded into the main memory and is
+        <span class="bg-blue">waiting to be assigned to the CPU</span>.
+      </li>
+      <li>
+        It is ready to run but the CPU is currently busy with another process.
+      </li>
+      <li>
+        Managed by the <span class="text-blue">Long Term Scheduler</span>.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>3. Running</h3>
+    <ul>
+      <li>
+        Instructions are <span class="bg-red">being executed</span>.
+      </li>
+      <li>
+        The process currently holds the CPU.
+      </li>
+      <li>
+        <span class="text-red">Only one process</span> can be in the Running state
+        at a time (per processor core).
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Waiting (Blocked)</h3>
+    <ul>
+      <li>
+        The process is <span class="bg-orange">waiting for some event</span> to occur
+        (such as an I/O completion or reception of a signal).
+      </li>
+      <li>
+        It cannot execute even if the CPU is free.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> A process waiting for the user
+      to press a key on the keyboard.
+    </div>
+
+    <hr />
+
+    <h3>5. Terminated (Exit)</h3>
+    <ul>
+      <li>
+        The process has <span class="bg-purple">finished execution</span>.
+      </li>
+      <li>
+        The OS removes the PCB and releases the allocated resources (memory,
+        files, devices).
+      </li>
+    </ul>
+
+    <br />
+
+    <img src="/os/4.png" alt="Process States" class='diagram'/>
+
+    <h2>Parent vs. Child Process</h2>
+    <p>
+      In an operating system, processes often exist in a hierarchy.
+    </p>
+
+
+
+    <h3>1. Parent Process</h3>
+    <p>
+      A <span class="bg-blue">Parent Process</span> is a process that
+      <span class="text-blue">creates another process</span>.
+    </p>
+    <ul>
+      <li>
+        It <span class="text-blue">starts first</span> in the sequence.
+      </li>
+      <li>
+        It can control or manage the execution of the child.
+      </li>
+      <li>
+        It may <span class="text-red">wait</span> for the child process to finish
+        before continuing or terminating.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Child Process</h3>
+    <p>
+      A <span class="bg-green">Child Process</span> is a process that is
+      <span class="text-green">created by a parent process</span>.
+    </p>
+    <ul>
+      <li>
+        It runs <span class="text-green">independently</span> but remains linked
+        to the parent.
+      </li>
+      <li>
+        It typically inherits attributes (like environment variables) and may use
+        <span class="text-orange">resources given by the parent</span>.
+      </li>
+    </ul>
+
+    <br>
+
+    <h1>Inter-process Communication (IPC)</h1>
+    <p>
+      <span class="bg-red">Inter-process Communication (IPC)</span> is a mechanism
+      that allows processes to <span class="text-red">exchange data</span> and
+      synchronize their actions.
+    </p>
+    <p>
+      Since processes are usually isolated for safety, IPC provides a way for them
+      to "talk" to each other effectively.
+    </p>
+
+
+
+    <h2>Two Main Models of IPC</h2>
+
+    <h3>1. Shared Memory</h3>
+    <ul>
+      <li>
+        Two or more processes share a specific
+        <span class="bg-green">region of memory</span>.
+      </li>
+      <li>
+        <strong>Pros:</strong> Very <span class="text-green">fast</span> because
+        data doesn't need to be copied.
+      </li>
+      <li>
+        <strong>Cons:</strong> Harder to synchronize (requires locking).
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Analogy</span> Like a <strong>whiteboard</strong>
+      in a room that everyone can read and write on.
+    </div>
+
+    <hr />
+
+    <h3>2. Message Passing</h3>
+    <ul>
+      <li>
+        Processes communicate by <span class="bg-blue">sending and receiving messages</span>
+        via the Operating System.
+      </li>
+      <li>
+        <strong>Pros:</strong> <span class="text-blue">Easier to implement</span>
+        and safer (OS handles the transfer).
+      </li>
+      <li>
+        <strong>Cons:</strong> Slower due to system call overhead.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Analogy</span> Like sending
+      <strong>emails or texts</strong> to each other.
+    </div>
+
+    <br>
+
+    <h2>Common IPC Mechanisms</h1>
+    <p>
+      There are several ways processes can communicate and synchronize within an
+      Operating System.
+    </p>
+
+    <h3>1. Pipes</h3>
+    <p>
+      Pipes are used for communication between processes where data flows in
+      <span class="bg-blue">one direction</span> (unidirectional).
+    </p>
+
+
+
+    <h4>a. Ordinary Pipe</h4>
+    <ul>
+      <li>
+        Works only between <span class="text-blue">related processes</span> (like
+        parent–child).
+      </li>
+      <li>
+        <span class="text-red">Temporary</span>; it disappears after use.
+      </li>
+    </ul>
+
+    <h4>b. Named Pipe (FIFO)</h4>
+    <ul>
+      <li>
+        Works between <span class="text-green">unrelated processes</span>.
+      </li>
+      <li>
+        Has a <span class="text-green">name in the file system</span> and persists
+        unlike ordinary pipes.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Shared Memory</h3>
+    <ul>
+      <li>
+        A common memory space shared by multiple processes.
+      </li>
+      <li>
+        Considered the <span class="bg-red">fastest way</span> to share data
+        because no copying is required.
+      </li>
+      <li>All processes can read and write to this space.</li>
+    </ul>
+
+[Image of shared memory architecture]
+
+    <hr />
+
+    <h3>3. Message Queues</h3>
+    <ul>
+      <li>
+        Processes send and receive messages which are stored in a
+        <span class="bg-orange">queue</span>.
+      </li>
+      <li>
+        Communication happens <span class="text-orange">one message at a time</span>.
+      </li>
+      <li>Useful for exchanging small amounts of data.</li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Sockets</h3>
+    <ul>
+      <li>
+        Used for communication between processes
+        <span class="bg-purple">over a network</span>.
+      </li>
+      <li>
+        Can work on the <span class="text-purple">same system or different systems</span>.
+      </li>
+      <li>Standard for client–server communication (e.g., the Internet).</li>
+    </ul>
+
+
+
+    <hr />
+
+    <h3>5. Signals</h3>
+    <ul>
+      <li>
+        A simple <span class="bg-red">notification</span> sent to a process.
+      </li>
+      <li>
+        Tells a process that <span class="text-red">something happened</span>
+        (e.g., interrupt, kill signal).
+      </li>
+      <li>Does not send data, only an alert.</li>
+    </ul>
+
+    <hr />
+
+    <h3>6. Semaphores</h3>
+    <ul>
+      <li>
+        A variable used to <span class="bg-teal">control access</span> to shared
+        resources.
+      </li>
+      <li>
+        Prevents multiple processes from entering a critical section at the
+        <span class="text-teal">same time</span> (Mutual Exclusion).
+      </li>
+      <li>Essential for <span class="text-teal">synchronization</span>.</li>
+    </ul>
+
+    <br>
+
+    <h1>Threads</h1>
+    <p>
+      A <span class="bg-blue">thread</span> is the
+      <span class="text-blue">smallest unit of execution</span> inside a process.
+    </p>
+
+
+
+    <p>
+      While a process is a full program in execution, a thread is a "lightweight"
+      unit that runs within that process.
+    </p>
+
+    <br>
+
+    <h2>Multithreading Models</h2>
+    <p>
+      There are different ways to implement threads in an operating system, depending on whether the thread management is handled by the
+      <span class="text-blue">user space</span> or the
+      <span class="text-red">kernel space</span>.
+    </p>
+
+
+
+    <h3>1. User-Level Multithreading</h3>
+    <p>
+      A model where threads are managed entirely by the
+      <span class="bg-blue">user program</span> (via a thread library), not the
+      operating system.
+    </p>
+    <ul>
+      <li>
+        <strong>Visibility:</strong> The OS sees only <span class="text-blue">one process</span>, regardless of how many threads are inside.
+      </li>
+      <li>
+        <strong>Pros:</strong> Thread creation and management are <span class="text-green">extremely fast</span>.
+      </li>
+      <li>
+        <strong>Cons:</strong> If one thread blocks (e.g., waiting for I/O), the
+        <span class="text-red">entire process blocks</span> because the OS doesn't know other threads exist.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Kernel-Level Multithreading</h3>
+    <p>
+      A model where threads are managed directly by the
+      <span class="bg-red">operating system kernel</span>.
+    </p>
+    <ul>
+      <li>
+        <strong>Visibility:</strong> Each thread is known to the kernel.
+      </li>
+      <li>
+        <strong>Pros:</strong> If one thread blocks, <span class="text-green">others can continue execution</span>.
+      </li>
+      <li>
+        <strong>Cons:</strong> Thread management is <span class="text-red">slower</span> due to system call overhead.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>3. Hybrid Multithreading</h3>
+    <p>
+      Combines the best of both worlds by mapping
+      <span class="bg-purple">user-level threads</span> to
+      <span class="bg-purple">kernel-level threads</span>.
+    </p>
+    <ul>
+      <li>
+        Offers better <span class="text-purple">performance and flexibility</span>.
+      </li>
+      <li>
+        Reduces blocking issues while maintaining speed.
+      </li>
+    </ul>
+
+
+
+    <br />
+
+    <h2>User vs. Kernel Threads</h2>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 15px; text-align: left;">Feature</th>
+          <th style="padding: 15px; text-align: left;">User-Level Threads</th>
+          <th style="padding: 15px; text-align: left;">Kernel-Level Threads</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Speed</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-green">Faster</span> (no system calls)</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-red">Slower</span> (system calls needed)</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Blocking</td>
+          <td style="padding: 15px; color: #E0E0E0;">One blocks = <span class="text-red">All block</span></td>
+          <td style="padding: 15px; color: #E0E0E0;">One blocks = <span class="text-green">Others run</span></td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">OS Awareness</td>
+          <td style="padding: 15px; color: #E0E0E0;">OS <span class="text-blue">does not know</span> about threads</td>
+          <td style="padding: 15px; color: #E0E0E0;">OS <span class="text-blue">manages</span> threads directly</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Benefits of Multithreading</h1>
+    <p>
+      The use of threads provides significant advantages in system design and
+      application performance. The benefits can be categorized into four main
+      areas:
+    </p>
+
+
+
+    <h3>1. Responsiveness</h3>
+    <ul>
+      <li>
+        Multithreading allows an interactive application to
+        <span class="bg-green">continue running</span> even if part of it is blocked
+        or performing a lengthy operation.
+      </li>
+      <li>
+        <strong>Result:</strong> Improved <span class="text-green">user experience</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Example</span> A web browser can load an image
+      in one thread while allowing the user to scroll through the page in another
+      thread.
+    </div>
+
+    <hr />
+
+    <h3>2. Resource Sharing</h3>
+    <ul>
+      <li>
+        Threads share the <span class="bg-blue">memory and resources</span> of the
+        process they belong to by default.
+      </li>
+      <li>
+        <strong>Benefit:</strong> It saves space and avoids the complexity of
+        setting up separate <span class="text-blue">Inter-process Communication (IPC)</span>
+        mechanisms.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>3. Economy</h3>
+    <ul>
+      <li>
+        Allocating memory and resources for process creation is costly.
+      </li>
+      <li>
+        Because threads share resources, it is much
+        <span class="bg-orange">more economical</span> to create and context-switch
+        threads.
+      </li>
+      <li>
+        <strong>Stat:</strong> In Solaris, creating a process is about
+        <span class="text-orange">30 times slower</span> than creating a thread.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Scalability (MP Architectures)</h3>
+    <ul>
+      <li>
+        In a multiprocessor architecture, threads can run in
+        <span class="bg-purple">parallel</span> on different processors.
+      </li>
+      <li>
+        A single-threaded process can run on only one CPU, no matter how many
+        are available.
+      </li>
+    </ul>
+
+    <br>
+
+    <h1>Process Scheduling</h1>
+    <p>
+      <span class="bg-blue">Process scheduling</span> is the method used by the
+      Operating System to decide <span class="text-blue">which process runs next</span>
+      on the CPU.
+    </p>
+
+
+
+    <h2>Two Scheduling Modes</h2>
+
+    <h3>1. Preemptive Scheduling</h3>
+    <ul>
+      <li>
+        The CPU <span class="bg-red">can be taken away</span> from a running
+        process before it finishes.
+      </li>
+      <li>
+        Used when a <span class="text-red">higher-priority process</span> arrives
+        or a time slice expires.
+      </li>
+    </ul>
+
+    <h3>2. Non-Preemptive Scheduling</h3>
+    <ul>
+      <li>
+        Once a process gets the CPU, it runs until
+        <span class="bg-green">completion or waiting state</span>.
+      </li>
+      <li>
+        The CPU is <span class="text-green">not forcibly taken</span>.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>Scheduling Criteria</h2>
+    <p>
+      To measure the performance of scheduling algorithms, we use the following metrics:
+    </p>
+    <ul>
+      <li>
+        <span class="text-orange">CPU Utilization:</span> Keep the CPU as busy as possible.
+      </li>
+      <li>
+        <span class="text-orange">Throughput:</span> The number of processes completed per time unit.
+      </li>
+      <li>
+        <span class="text-orange">Turnaround Time:</span> Total time taken to execute a process (Arrival to Completion).
+      </li>
+      <li>
+        <span class="text-orange">Waiting Time:</span> Total time a process spends waiting in the ready queue.
+      </li>
+      <li>
+        <span class="text-orange">Response Time:</span> Time from submission until the first response is produced.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>Scheduling Algorithms</h2>
+
+    <h3>1. FCFS (First Come First Serve)</h3>
+    <ul>
+      <li>
+        Processes run in the <span class="bg-blue">order of arrival</span>.
+      </li>
+      <li>
+        <strong>Pros:</strong> Simple and easy to understand.
+      </li>
+      <li>
+        <strong>Cons:</strong> Causes the <span class="text-red">Convoy Effect</span>
+        (long waiting time if a large process arrives first).
+      </li>
+    </ul>
+
+
+
+    <hr />
+
+    <h3>2. SJF (Shortest Job First)</h3>
+    <ul>
+      <li>
+        The process with the <span class="bg-green">shortest burst time</span> runs
+        first.
+      </li>
+      <li>
+        <strong>Pros:</strong> Minimizes average waiting time (Optimal).
+      </li>
+      <li>
+        <strong>Cons:</strong> Cannot be implemented if burst time is not known; can cause starvation for long processes.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>3. SRTF (Shortest Remaining Time First)</h3>
+    <ul>
+      <li>
+        The <span class="bg-red">Preemptive version</span> of SJF.
+      </li>
+      <li>
+        The process with the <span class="text-red">least remaining time</span>
+        is executed next.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Priority Scheduling</h3>
+    <ul>
+      <li>
+        The process with the <span class="bg-purple">highest priority</span> gets the CPU first.
+      </li>
+      <li>
+        Can be <strong>Preemptive</strong> or <strong>Non-Preemptive</strong>.
+      </li>
+      <li>
+        <strong>Issue:</strong> Low priority processes may never execute (<span class="text-red">Starvation</span>).
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>5. Round Robin (RR)</h3>
+    <ul>
+      <li>
+        Designed for time-sharing systems.
+      </li>
+      <li>
+        Each process gets a <span class="bg-teal">fixed time slice</span> (quantum).
+      </li>
+      <li>
+        After the time expires, the process goes to the <span class="text-teal">end of the queue</span>.
+      </li>
+    </ul>
+
+
+
+    <hr />
+
+    <h3>6. Multilevel Queue</h3>
+    <ul>
+      <li>
+        Processes are divided into <span class="bg-orange">multiple separate queues</span>
+        (e.g., Foreground vs Background).
+      </li>
+      <li>
+        Each queue has its own scheduling algorithm.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>7. Multilevel Feedback Queue</h3>
+    <ul>
+      <li>
+        Similar to Multilevel Queue, but processes can
+        <span class="bg-blue">move between queues</span>.
+      </li>
+      <li>
+        Priority changes based on behavior (CPU-bound vs I/O-bound) and execution time.
+      </li>
+      <li>Considered the most general and complex algorithm.</li>
+    </ul>
+
+    <hr />
+
+    <h3>8. EDF (Earliest Deadline First)</h3>
+    <ul>
+      <li>
+        Process with the <span class="bg-red">nearest deadline</span> runs first.
+      </li>
+      <li>
+        Widely used in <span class="text-red">Real-Time Systems</span>.
+      </li>
+    </ul>
+
+    <br>
+
+    <h1>Scheduling in Multiprocessors</h1>
+    <p>
+      In a system with multiple processors (CPUs), scheduling becomes more complex.
+      The goal is to share the load effectively across all CPUs.
+    </p>
+
+
+
+    <h3>1. CPU Affinity</h3>
+    <p>
+      <span class="bg-blue">CPU Affinity</span> means a process has a preference
+      to stay on the <span class="text-blue">same processor</span> it ran on
+      previously.
+    </p>
+    <ul>
+      <li>
+        <strong>Why?</strong> To take advantage of the data still stored in that
+        processor's <span class="text-green">cache memory</span> (avoiding cache misses).
+      </li>
+    </ul>
+
+    <h4>Types of Affinity:</h4>
+    <ul>
+      <li>
+        <span class="text-orange">Soft Affinity:</span> The OS <em>tries</em> to
+        keep the process on the same CPU, but may move it if necessary.
+      </li>
+      <li>
+        <span class="text-red">Hard Affinity:</span> The process is explicitly
+        <span class="bg-red">restricted</span> to run only on specific processors.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Load Balancing</h3>
+    <p>
+      <span class="bg-green">Load Balancing</span> ensures that the workload is
+      distributed evenly across all processors so that no CPU is idle while others
+      are overloaded.
+    </p>
+
+    <h4>Mechanisms:</h4>
+    <ul>
+      <li>
+        <strong>Push Migration:</strong> A specific task checks the load periodically.
+        If a CPU is overloaded, it <span class="text-purple">pushes</span> processes
+        to an idle or less busy CPU.
+      </li>
+      <li>
+        <strong>Pull Migration:</strong> An idle processor <span class="text-purple">pulls</span>
+        a waiting task from a busy processor's queue.
+      </li>
+    </ul>
+
+
+
+    <br />
+    <br />
+
+    <h1>Thread Scheduling</h1>
+    <p>
+      On operating systems that support kernel-level threads, the OS schedules
+      <strong>threads</strong>, not processes.
+    </p>
+
+    <h3>1. Process-Contention Scope (PCS)</h3>
+    <ul>
+      <li>
+        Occurs in systems using <span class="bg-orange">Many-to-One</span> or
+        <span class="bg-orange">Many-to-Many</span> models.
+      </li>
+      <li>
+        The <strong>thread library</strong> schedules user-level threads onto
+        available LWPs (Lightweight Processes).
+      </li>
+      <li>
+        Competition for the CPU happens <span class="text-orange">within the process</span>.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. System-Contention Scope (SCS)</h3>
+    <ul>
+      <li>
+        Occurs in the <span class="bg-teal">One-to-One</span> model (like Windows, Linux).
+      </li>
+      <li>
+        The <strong>kernel</strong> decides which kernel-level thread runs on the CPU.
+      </li>
+      <li>
+        Competition for the CPU happens <span class="text-teal">among all threads in the system</span>.
+      </li>
+    </ul>
+
+    <br>
+
+    <h1>Process Synchronization</h1>
+    <p>
+      <span class="bg-blue">Process synchronization</span> ensures that multiple
+      processes work together safely when sharing data.
+    </p>
+
+    <hr />
+
+    <h3>Race Condition</h3>
+    <p>
+      A <span class="bg-red">race condition</span> happens when two or more
+      processes access shared data at the same time.
+    </p>
+    <p>
+      The final result depends on <span class="text-red">who finishes first</span>.
+      This can cause wrong or unpredictable output.
+    </p>
+
+    <hr />
+
+    <h3>Critical Section</h3>
+    <p>
+      A <span class="bg-orange">critical section</span> is the part of a program
+      where shared data is accessed.
+    </p>
+    <p>
+      <span class="text-orange">Only one process</span> is allowed inside the
+      critical section at a time.
+    </p>
+
+
+
+    <hr />
+
+    <h2>Critical Section Problem</h2>
+    <p>
+      The problem involves controlling access to the critical section. The main goal
+      is to <span class="text-red">prevent multiple processes</span> from entering
+      together.
+    </p>
+
+    <h3>Requirements for a Solution</h3>
+
+    <h4>1. Mutual Exclusion</h4>
+    <p>
+      <span class="bg-red">Only one process</span> can be in the critical section
+      at a time. If one is executing, others must wait.
+    </p>
+
+    <h4>2. Progress</h4>
+    <p>
+      If no one is inside the critical section, a process that wants to enter
+      <span class="bg-green">should not wait forever</span>. Only those wanting to
+      enter can decide who goes next.
+    </p>
+
+    <h4>3. Bounded Waiting</h4>
+    <p>
+      There must be a limit on the number of times other processes can enter before
+      a requesting process is granted entry. A process will
+      <span class="bg-blue">eventually get its turn</span>.
+    </p>
+
+    <hr />
+
+    <h2>Peterson’s Solution</h2>
+    <p>
+      A classic <span class="text-purple">software solution</span> to the critical
+      section problem. It is designed specifically for <strong>two processes</strong>.
+    </p>
+
+    <h3>How it works</h3>
+    <p>It uses two shared variables:</p>
+    <ul>
+      <li><code>turn</code>: Indicates whose turn it is to enter.</li>
+      <li><code>flag[]</code>: Indicates if a process <em>wants</em> to enter.</li>
+    </ul>
+
+    <div class="code-block">
+      <span class="comment">// Structure for Process i</span><br>
+      <br>
+      <span class="comment">// 1. Signal that I want to enter</span><br>
+      flag[i] = true;<br>
+      <br>
+      <span class="comment">// 2. Give priority to the other process (j)</span><br>
+      turn = j;<br>
+      <br>
+      <span class="comment">// 3. Wait if the other process wants to enter AND it's their turn</span><br>
+      while (flag[j] && turn == j) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Busy wait (do nothing)</span><br>
+      }<br>
+      <br>
+      <span class="comment">// --- CRITICAL SECTION STARTS ---</span><br>
+      <span class="comment">// Access shared resources here</span><br>
+      <span class="comment">// --- CRITICAL SECTION ENDS ---</span><br>
+      <br>
+      <span class="comment">// 4. Signal that I am done</span><br>
+      flag[i] = false;
+    </div>
+
+    <h3>Limitation</h3>
+    <p>
+      Peterson's solution is theoretically correct but may
+      <span class="bg-red">fail on modern CPUs</span> due to instruction
+      reordering (the processor might change the order of read/write operations
+      for optimization).
+    </p>
+
+    <br>
+
+<h1>Synchronization Tools</h1>
+<p>
+  To solve the critical section problem efficiently, we use both
+  <span class="bg-blue">hardware instructions</span> and
+  <span class="bg-green">software tools</span>.
+</p>
+
+    <h2>1. Hardware Support</h2>
+    <p>
+      Modern hardware provides special <span class="text-red">atomic instructions</span>
+      (indivisible units) to help with synchronization.
+    </p>
+
+
+
+    <h3>Test-and-Set</h3>
+    <ul>
+      <li>
+        An atomic instruction that <span class="bg-blue">checks and sets</span> a
+        lock variable in <strong>one step</strong>.
+      </li>
+      <li>
+        Ensures <span class="text-blue">mutual exclusion</span> because it cannot be interrupted.
+      </li>
+    </ul>
+
+    <h3>Compare-and-Swap (CAS)</h3>
+    <ul>
+      <li>
+        <span class="bg-green">Compares</span> a memory value with an expected value
+        and <span class="bg-green">updates</span> it only if it matches.
+      </li>
+      <li>
+        Widely used for <span class="text-green">safe locking</span> and lock-free algorithms.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>2. Semaphores</h2>
+    <p>
+      A semaphore is an <span class="bg-purple">integer variable</span> used for
+      process synchronization. It is accessed only through two atomic operations:
+      <code>wait()</code> and <code>signal()</code>.
+    </p>
+
+
+
+    <h3>Binary Semaphore</h3>
+    <ul>
+      <li>
+        Value can range only between <span class="text-purple">0 and 1</span>.
+      </li>
+      <li>
+        Allows <span class="text-purple">only one process</span> at a time (similar to a Mutex).
+      </li>
+    </ul>
+
+    <h3>Counting Semaphore</h3>
+    <ul>
+      <li>
+        Value can be <span class="text-purple">greater than 1</span>.
+      </li>
+      <li>
+        Used to control access to <span class="bg-purple">multiple instances</span>
+        of a resource (e.g., 3 printers available).
+      </li>
+    </ul>
+
+    <hr />
+
+    <h2>3. Mutex Locks</h2>
+    <p>
+      Short for <strong>Mut</strong>ual <strong>Ex</strong>clusion.
+    </p>
+    <ul>
+      <li>
+        A locking mechanism that allows
+        <span class="bg-red">only one thread/process</span> to access a resource at a time.
+      </li>
+      <li>
+        Used specifically to <span class="text-red">protect critical sections</span>.
+      </li>
+    </ul>
+    <div class="example-box">
+      <span class="example-label">Rule</span> If a process acquires a Mutex lock,
+      it must release it before any other process can enter.
+    </div>
+
+    <hr />
+
+    <h2>4. Monitors</h2>
+    <p>
+      A <span class="bg-teal">high-level synchronization tool</span> (supported by
+      programming languages like Java).
+    </p>
+
+
+
+    <ul>
+      <li>
+        Ensures <span class="text-teal">automatic mutual exclusion</span> so the
+        programmer doesn't need to manually manage locks.
+      </li>
+      <li>
+        Only one process can be active inside the monitor at a time.
+      </li>
+    </ul>
+
+    <h3>Condition Variables</h3>
+    <p>
+      Used <strong>inside monitors</strong> to provide more synchronization flexibility.
+    </p>
+    <ul>
+      <li>
+        Allows a process to <span class="text-teal">wait</span> for a specific condition.
+      </li>
+      <li>
+        Allows another process to <span class="text-teal">signal</span> when that condition is met.
+      </li>
+    </ul>
+
+    <br>
+
+    <h1>Deadlock</h1>
+    <p>
+      A <span class="bg-red">deadlock</span> occurs when a set of processes are
+      <span class="text-red">stuck forever</span>, because each process is holding
+      a resource and waiting for another resource acquired by some other process.
+    </p>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Analogy</span> Traffic gridlock at an
+      intersection where four cars block each other, and no one can move back or
+      forward.
+    </div>
+
+
+    <h2>Necessary Conditions for Deadlock</h2>
+    <p>
+      For a deadlock to occur, <strong>all four</strong> of the following conditions
+      must hold simultaneously (Coffman Conditions):
+    </p>
+
+    <h3>1. Mutual Exclusion</h3>
+    <ul>
+      <li>
+        At least one resource must be held in a <span class="bg-blue">non-shareable mode</span>.
+      </li>
+      <li>
+        Only one process can use the resource at a time.
+      </li>
+    </ul>
+
+    <h3>2. Hold and Wait</h3>
+    <ul>
+      <li>
+        A process must be <span class="bg-orange">holding at least one resource</span>
+        and waiting to acquire additional resources held by other processes.
+      </li>
+    </ul>
+
+    <h3>3. No Preemption</h3>
+    <ul>
+      <li>
+        Resources cannot be <span class="bg-red">taken forcefully</span>.
+      </li>
+      <li>
+        A resource can be released only voluntarily by the process holding it.
+      </li>
+    </ul>
+
+    <h3>4. Circular Wait</h3>
+    <ul>
+      <li>
+        A set of processes are waiting for each other in a <span class="bg-purple">circular chain</span>.
+      </li>
+      <li>
+        P0 waits for P1, P1 waits for P2... and Pn waits for P0.
+      </li>
+    </ul>
+
+
+
+    <hr />
+
+    <h2>Deadlock Handling Strategies</h2>
+
+    <h3>1. Deadlock Prevention</h3>
+    <ul>
+      <li>
+        <strong>Goal:</strong> Ensure that <span class="text-green">at least one</span>
+        of the four necessary conditions cannot hold.
+      </li>
+      <li>
+        <strong>Method:</strong> Make mutual exclusion impossible (hard), disallow hold and wait, allow preemption, or prevent circular wait.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Deadlock Avoidance</h3>
+    <ul>
+      <li>
+        <strong>Goal:</strong> The OS checks the system state <span class="bg-blue">before granting a resource</span>.
+      </li>
+      <li>
+        If allocating the resource keeps the system in a <span class="text-blue">Safe State</span>, it is granted. Otherwise, the process must wait.
+      </li>
+    </ul>
+
+    <h4>Banker’s Algorithm</h4>
+    <ul>
+      <li>
+        A famous deadlock <span class="text-green">avoidance algorithm</span>.
+      </li>
+      <li>
+        It simulates the allocation of predetermined maximum possible amounts of
+        all resources, then checks to see if the resulting state is safe.
+      </li>
+    </ul>
+
+
+
+    <hr />
+
+    <h3>3. Deadlock Detection</h3>
+    <ul>
+      <li>
+        The system allows deadlocks to occur but checks periodically.
+      </li>
+      <li>
+        <strong>Tools:</strong> Uses <span class="text-purple">Resource Allocation Graphs</span>
+        or specific algorithms to detect cycles.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Deadlock Recovery</h3>
+    <p>
+      Once a deadlock is detected, the system must recover to a normal state.
+    </p>
+    <ul>
+      <li>
+        <span class="bg-red">Process Termination:</span> Abort all deadlocked
+        processes or abort them one at a time until the cycle is broken.
+      </li>
+      <li>
+        <span class="bg-orange">Resource Preemption:</span> Take resources back from
+        some processes and give them to others (requires rollback).
+      </li>
+    </ul>
+
+    <br>
+
+<h1>Starvation vs. Livelock</h1>
+<p>
+  While Deadlock, Starvation, and Livelock all relate to processes not
+  completing their tasks, they happen for different reasons.
+</p>
+
+    <h2>1. Starvation (Indefinite Blocking)</h2>
+    <p>
+      Starvation happens when a process <span class="bg-red">never gets the CPU or resources</span> it needs to execute.
+    </p>
+    <ul>
+      <li>
+        It waits <span class="text-red">indefinitely</span> because other processes (usually higher priority ones) keep grabbing the resources.
+      </li>
+      <li>
+        The process is ready to run but is continuously overlooked by the scheduler.
+      </li>
+    </ul>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Solution</span> <strong>Aging:</strong> Gradually increasing the priority of a process the longer it waits.
+    </div>
+
+    <hr />
+
+    <h2>2. Livelock</h2>
+    <p>
+      Livelock occurs when processes are <span class="bg-blue">active but make no progress</span>.
+    </p>
+    <ul>
+      <li>
+        Unlike deadlock (where processes are stuck waiting), in livelock, processes are <span class="text-blue">running and responding</span> to each other.
+      </li>
+      <li>
+        They constantly change their state in response to the other process, but they never complete their actual work.
+      </li>
+    </ul>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Analogy</span> Two people trying to pass each other in a hallway. Person A moves left, Person B moves left. Person A moves right, Person B moves right. They are <strong>moving</strong> (active), but <strong>not going anywhere</strong> (no progress).
+    </div>
+
+    <br />
+
+    <h2>Comparison: Deadlock vs. Starvation vs. Livelock</h2>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 15px; text-align: left;">Feature</th>
+          <th style="padding: 15px; text-align: left;">Deadlock</th>
+          <th style="padding: 15px; text-align: left;">Starvation</th>
+          <th style="padding: 15px; text-align: left;">Livelock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">State</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-red">Waiting</span> (Blocked)</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-orange">Ready</span> (Waiting for CPU)</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-green">Running</span> (Active)</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Cause</td>
+          <td style="padding: 15px; color: #E0E0E0;">Circular dependency</td>
+          <td style="padding: 15px; color: #E0E0E0;">Low Priority</td>
+          <td style="padding: 15px; color: #E0E0E0;">Repeated state changes</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Progress</td>
+          <td style="padding: 15px; color: #E0E0E0;">None</td>
+          <td style="padding: 15px; color: #E0E0E0;">None (for the victim)</td>
+          <td style="padding: 15px; color: #E0E0E0;">None</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <h1>Classic Synchronization Problems</h1>
+    <p>
+      These are standard problems used to test and explain
+      <span class="bg-blue">process synchronization</span> and coordination mechanisms
+      in operating systems.
+    </p>
+
+    <hr />
+
+    <h3>1. Producer–Consumer Problem</h3>
+    <p>
+      Also known as the <strong>Bounded-Buffer Problem</strong>.
+    </p>
+    <ul>
+      <li>
+        <span class="text-blue">Producer:</span> Creates data and places it into a
+        buffer.
+      </li>
+      <li>
+        <span class="text-green">Consumer:</span> Removes data from the buffer to
+        process it.
+      </li>
+    </ul>
+
+
+
+    <h4>The Challenge:</h4>
+    <ul>
+      <li>
+        <strong>Synchronization is needed</strong> so the producer doesn’t try to
+        add data to a <span class="text-red">full buffer</span>.
+      </li>
+      <li>
+        The consumer doesn't try to remove data from an
+        <span class="text-red">empty buffer</span>.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Readers–Writers Problem</h3>
+    <p>
+      Addresses the challenge of accessing a shared database.
+    </p>
+    <ul>
+      <li>
+        <span class="bg-purple">Readers:</span> Multiple processes want to read
+        the data at the same time. (Allowed &larr; No data corruption).
+      </li>
+      <li>
+        <span class="bg-red">Writer:</span> A process wants to update or write data.
+        (Needs <span class="text-red">Exclusive Access</span>).
+      </li>
+    </ul>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Constraint</span> If a Writer is active,
+      <strong>no other Reader or Writer</strong> can be active.
+    </div>
+
+    <hr />
+
+    <h3>3. Dining Philosophers Problem</h3>
+    <p>
+      Five philosophers sit at a round table with a bowl of rice and five chopsticks (or forks).
+    </p>
+    <ul>
+      <li>
+        They alternate between <span class="text-orange">Thinking</span> and
+        <span class="text-green">Eating</span>.
+      </li>
+      <li>
+        To eat, a philosopher needs <span class="bg-orange">two forks</span> (left and right).
+      </li>
+    </ul>
+
+
+
+    <h4>The Challenge:</h4>
+    <p>
+      This problem illustrates synchronization issues like:
+    </p>
+    <ul>
+      <li>
+        <span class="text-red">Deadlock:</span> If everyone picks up the left fork
+        at the same time, no one can eat.
+      </li>
+      <li>
+        <span class="text-red">Starvation:</span> A philosopher might never get
+        both forks if neighbors are constantly eating.
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Sleeping Barber Problem</h3>
+    <p>
+      Demonstrates process coordination and waiting queues.
+    </p>
+    <ul>
+      <li>
+        <strong>Barber:</strong> <span class="bg-teal">Sleeps</span> if there are
+        no customers. Wakes up when a customer arrives.
+      </li>
+      <li>
+        <strong>Customer:</strong> If the barber is busy, they sit in the
+        waiting room. If the waiting room is <span class="text-red">full</span>,
+        they leave.
+      </li>
+    </ul>
+
+
+
+    <div class="example-box">
+      <span class="example-label">Goal</span> Use <strong>semaphores</strong> to
+      ensure the barber sleeps/wakes correctly and customers don't enter a full
+      shop.
+    </div>
 
   </body>
 </html>

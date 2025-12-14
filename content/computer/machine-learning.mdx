@@ -4,76 +4,218 @@
 <head>
     <title>Machine Learning Notes</title>
     <style>
-        h1 {
-            font-size: 2rem;
-            /* padding-bottom: 10px; */
-            margin-bottom: 10px;
-        }
+      /* --- General Layout --- */
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0; /* Light Gray text */
 
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        /* padding: 40px 20px; */
+      }
 
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 30px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+      /* --- Typography --- */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        border-bottom: 3px solid #333;
+        padding-bottom: 10px;
+      }
 
-        /* Paragraphs */
-        p {
-            /* margin-bottom: 15px; */
-        }
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+        border-left: 5px solid #ff9800; /* Bright Orange accent */
+        padding-left: 15px;
+      }
 
-        /* List Styling - FIXED */
-        ul {
-            margin-top: 10px;
-            padding-left: 20px;
-            list-style-position: inside; /* Forces bullets inside the content area */
-            list-style-type: disc;       /* Ensures standard bullet dots */
-        }
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #b0bec5; /* Blue-Grey for subheaders */
+      }
 
-        li {
-            margin-bottom: 5px;
-        }
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-style: italic;
+        color: #90a4ae;
+      }
 
-        /* Custom Classes for Highlighting */
-        .accent {
-            color: #3A86FF; /* Blue */
-            font-weight: bold;
-        }
+      p {
+        margin-bottom: 15px;
+      }
 
-        .accent-2 {
-            color: #FF006E; /* Pink */
-            font-weight: bold;
-        }
+      /* --- List Styling --- */
+      ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style-position: outside;
+      }
 
-        .accent-3 {
-            color: #8338EC; /* Purple */
-            font-weight: bold;
-        }
+      li {
+        margin-bottom: 8px;
+        color: #cfd8dc;
+      }
 
-        .muted-strong {
-            color: #D00000; /* Dark Red */
-            font-weight: 500;
-        }
+      /* --- HIGHLIGHTING SYSTEM (Dark Mode) --- */
 
-        /* Callout Box Styling */
-        .callout {
-            border-left: 4px solid #FF4500; /* Orange Border */
-            padding: 10px 15px;
-            margin: 15px 0;
-            background-color: transparent;
-        }
+      /* Strategy: Use RGBA for backgrounds to keep them subtle.
+           Use bright pastel colors for text to ensure contrast.
+        */
 
-        .label {
-            color: #FF4500;
-            font-weight: bold;
-        }
+      /* Level 1: Very Important (Background Highlight) */
+      .bg-red {
+        background-color: rgba(229, 57, 53, 0.2); /* Semi-transparent Red */
+        color: #ff8a80; /* Light Salmon */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(229, 57, 53, 0.3);
+      }
 
-        /* Italics styling */
-        em {
-            color: #2EC4B6; /* Teal */
-            font-style: italic;
-        }
+      .bg-blue {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #82b1ff; /* Light Blue */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+      }
+
+      .bg-green {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #b9f6ca; /* Mint Green */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
+
+      .bg-purple {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #ea80fc; /* Light Purple */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(156, 39, 176, 0.3);
+      }
+
+      .bg-orange {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #ffd180; /* Light Orange */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 152, 0, 0.3);
+      }
+
+      .bg-teal {
+        background-color: rgba(0, 150, 136, 0.2);
+        color: #a7ffeb; /* Aqua */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 150, 136, 0.3);
+      }
+
+      /* Level 2: Less Important (Text Color Only - Pastels) */
+      .text-red {
+        color: #ef9a9a;
+        font-weight: 600;
+      }
+      .text-blue {
+        color: #90caf9;
+        font-weight: 600;
+      }
+      .text-green {
+        color: #a5d6a7;
+        font-weight: 600;
+      }
+      .text-purple {
+        color: #ce93d8;
+        font-weight: 600;
+      }
+      .text-orange {
+        color: #ffcc80;
+        font-weight: 600;
+      }
+      .text-teal {
+        color: #80cbc4;
+        font-weight: 600;
+      }
+      .text-indigo {
+        color: #9fa8da;
+        font-weight: 600;
+      }
+      .text-pink {
+        color: #f48fb1;
+        font-weight: 600;
+      }
+      .text-cyan {
+        color: #81d4fa;
+        font-weight: 600;
+      }
+      .text-brown {
+        color: #bcaaa4;
+        font-weight: 600;
+      }
+
+      /* --- Callout Box (Dark Mode) --- */
+      .example-box {
+        background-color: #1e1e1e; /* Slightly lighter than body */
+        border-left: 4px solid #ffd54f; /* Bright Amber */
+        padding: 10px 15px;
+        margin: 10px 0 25px 0;
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .example-label {
+        font-weight: bold;
+        color: #ffd54f; /* Matching border color */
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-right: 5px;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333; /* Dark divider */
+        margin: 40px 0;
+      }
+
+      .diagram {
+        width: 100%;
+        height: auto;
+        border: 1px solid #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        padding: 10px;
+        overflow: hidden;
+
+      }
+
+      .diagram-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 20px;
+        align-items: center;
+
+      }
     </style>
 
 </head>
@@ -114,6 +256,115 @@
     <p>
         <strong class="accent-2">Supervised learning</strong> is a type of machine learning where the model <strong class="accent">learns from labeled data</strong> — meaning each <strong class="accent-3">input comes with the correct output</strong> already provided.
     </p>
+
+    <h2>Most Common Use Cases for Supervised Learning</h2>
+    <p>
+      Supervised learning problems are generally grouped into two categories:
+      <span class="text-red">Regression</span> and
+      <span class="text-blue">Classification</span>.
+    </p>
+
+
+
+    <img src="/ml/1.png" alt="Regression vs Classification" class="diagram">
+
+
+    <h3>1. Regression</h3>
+    <p>
+      A regression model predicts a
+      <span class="bg-red">numeric value</span> (continuous data).
+    </p>
+    <ul>
+      <li>
+        Used when the output variable is a real number, like
+        <span class="text-red">price, weight, or height</span>.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> A weather model that predicts
+      the <strong>amount of rain</strong> (in inches or millimeters).
+    </div>
+
+    <hr />
+
+    <h3>2. Classification</h3>
+    <p>
+      Classification models predict the likelihood that something
+      <span class="bg-blue">belongs to a category</span> (discrete classes).
+    </p>
+    <ul>
+      <li>
+        Used when the output variable is a category, such as
+        <span class="text-blue">"Yes/No"</span> or
+        <span class="text-blue">"Spam/Not Spam"</span>.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Examples</span> Predicting if an email is
+      <strong>spam</strong> or identifying if a photo contains a
+      <strong>cat</strong>.
+    </div>
+
+    <h2>Unsupervised Learning</h2>
+    <p>
+      <span class="text-green">Unsupervised learning</span> is a type of machine
+      learning where the model
+      <span class="bg-green">learns without labeled data</span>.
+    </p>
+
+
+
+    <img src="/ml/2.png" alt="Unsupervised Learning" class="diagram">
+
+
+    <p>
+      This means that
+      <span class="text-green">no output/label input is provided</span> to guide
+      the learning process; the model must find patterns on its own.
+    </p>
+    <h3>Clustering</h3>
+    <p>
+      A commonly used <span class="text-green">unsupervised learning model</span>
+      employs a technique called
+      <span class="bg-purple">clustering</span>.
+    </p>
+
+    <div class="diagram-container">
+    <img src="/ml/3.png" alt="Clustering" class="diagram">
+    <img src="/ml/4.png" alt="Clustering" class="diagram">
+    </div>
+
+    <h2>Reinforcement Learning</h2>
+    <p>
+      <span class="text-orange">Reinforcement learning</span> models make
+      predictions by getting
+      <span class="bg-orange">rewards or penalties</span> based on actions
+      performed within an environment.
+    </p>
+
+    <img src="/ml/5.png" alt="Reinforcement Learning" class="diagram">
+
+    <h2>Generative AI</h2>
+    <p>
+      Generative AI is a subset of artificial intelligence capable of
+      <span class="bg-teal">creating new content</span>, including text, images,
+      audio, and video.
+    </p>
+    
+    
+
+    <p>
+      Unlike traditional AI which classifies data, Generative AI learns patterns
+      from training data to <span class="text-teal">generate novel outputs</span>
+      that resemble the original data but are unique.
+    </p>
+
+    <div class="example-box">
+      <span class="example-label">Examples</span> ChatGPT (Text), DALL-E &
+      Midjourney (Images), Sora (Video).
+    </div>
 
 </body>
 </html>
