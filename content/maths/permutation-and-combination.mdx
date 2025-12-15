@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Set Theory</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+      /* --- General Layout --- */
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0; /* Light Gray text */
+
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        /* padding: 40px 20px; */
+      }
+
+      /* --- Typography --- */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        border-bottom: 3px solid #333;
+        padding-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+        border-left: 5px solid #ff9800; /* Bright Orange accent */
+        padding-left: 15px;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #b0bec5; /* Blue-Grey for subheaders */
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-style: italic;
+        color: #90a4ae;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      /* --- List Styling --- */
+      ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        list-style-position: outside;
+      }
+
+      li {
+        margin-bottom: 8px;
+        color: #cfd8dc;
+      }
+
+      /* --- HIGHLIGHTING SYSTEM (Dark Mode) --- */
+
+      /* Strategy: Use RGBA for backgrounds to keep them subtle.
+           Use bright pastel colors for text to ensure contrast.
+        */
+
+      /* Level 1: Very Important (Background Highlight) */
+      .bg-red {
+        background-color: rgba(229, 57, 53, 0.2); /* Semi-transparent Red */
+        color: #ff8a80; /* Light Salmon */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(229, 57, 53, 0.3);
+      }
+
+      .bg-blue {
+        background-color: rgba(33, 150, 243, 0.2);
+        color: #82b1ff; /* Light Blue */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+      }
+
+      .bg-green {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #b9f6ca; /* Mint Green */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
+
+      .bg-purple {
+        background-color: rgba(156, 39, 176, 0.2);
+        color: #ea80fc; /* Light Purple */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(156, 39, 176, 0.3);
+      }
+
+      .bg-orange {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #ffd180; /* Light Orange */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 152, 0, 0.3);
+      }
+
+      .bg-teal {
+        background-color: rgba(0, 150, 136, 0.2);
+        color: #a7ffeb; /* Aqua */
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 150, 136, 0.3);
+      }
+
+      /* Level 2: Less Important (Text Color Only - Pastels) */
+      .text-red {
+        color: #ef9a9a;
+        font-weight: 600;
+      }
+      .text-blue {
+        color: #90caf9;
+        font-weight: 600;
+      }
+      .text-green {
+        color: #a5d6a7;
+        font-weight: 600;
+      }
+      .text-purple {
+        color: #ce93d8;
+        font-weight: 600;
+      }
+      .text-orange {
+        color: #ffcc80;
+        font-weight: 600;
+      }
+      .text-teal {
+        color: #80cbc4;
+        font-weight: 600;
+      }
+      .text-indigo {
+        color: #9fa8da;
+        font-weight: 600;
+      }
+      .text-pink {
+        color: #f48fb1;
+        font-weight: 600;
+      }
+      .text-cyan {
+        color: #81d4fa;
+        font-weight: 600;
+      }
+      .text-brown {
+        color: #bcaaa4;
+        font-weight: 600;
+      }
+
+      /* --- Callout Box (Dark Mode) --- */
+      .example-box {
+        background-color: #1e1e1e; /* Slightly lighter than body */
+        border-left: 4px solid #ffd54f; /* Bright Amber */
+        padding: 10px 15px;
+        margin: 10px 0 25px 0;
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .example-label {
+        font-weight: bold;
+        color: #ffd54f; /* Matching border color */
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        margin-right: 5px;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333; /* Dark divider */
+        margin: 40px 0;
+      }
+
+      .diagram {
+        width: 100%;
+        height: auto;
+        border: 1px solid #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        padding: 10px;
+        overflow: hidden;
+
+      }
+
+      .diagram-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 20px;
+        align-items: center;
+
+      }
+    </style>
+
+</head>
+
+<body>
+
+<h1>Permutation & Combination</h1>
+<p>
+  The core difference between these two concepts lies in whether the <span class="bg-blue">order of objects</span> matters.
+</p>
+
+    <hr />
+
+    <h3>1. Permutation (Arrangement)</h3>
+    <p>
+      Permutation is the <span class="text-blue">arrangement</span> of objects where the <strong>order matters</strong>.
+    </p>
+    <ul>
+      <li>
+        <strong>Concept:</strong> XY is different from YX.
+      </li>
+      <li>
+        <strong>Keywords:</strong> Arrange, Order, Rank, Position, Schedule.
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Formula: <sup>n</sup>P<sub>r</sub> = n! / (n &minus; r)!
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> A lock code is <strong>123</strong>. If you enter <strong>321</strong>, it won't open. The order changes the outcome.
+    </div>
+
+    <hr />
+
+    <h3>2. Combination (Selection)</h3>
+    <p>
+      Combination is the <span class="text-green">selection</span> of objects where the <strong>order does NOT matter</strong>.
+    </p>
+    <ul>
+      <li>
+        <strong>Concept:</strong> XY is the same as YX.
+      </li>
+      <li>
+        <strong>Keywords:</strong> Select, Choose, Pick, Team, Group.
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Formula: <sup>n</sup>C<sub>r</sub> = n! / [ r! &times; (n &minus; r)! ]
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Making a <strong>fruit salad</strong>. Adding Apple then Banana is the same as adding Banana then Apple. The result is the same salad.
+    </div>
+
+
+
+    <hr />
+
+    <h3>3. Key Differences</h3>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 15px; text-align: left;">Basis</th>
+          <th style="padding: 15px; text-align: left;">Permutation</th>
+          <th style="padding: 15px; text-align: left;">Combination</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Order</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-green">Matters</span> (Strict)</td>
+          <td style="padding: 15px; color: #E0E0E0;"><span class="text-red">Doesn't Matter</span></td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Action</td>
+          <td style="padding: 15px; color: #E0E0E0;">Arranging</td>
+          <td style="padding: 15px; color: #E0E0E0;">Selecting / Choosing</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Relationship</td>
+          <td style="padding: 15px; color: #E0E0E0;">
+            <sup>n</sup>P<sub>r</sub> = <sup>n</sup>C<sub>r</sub> &times; r!
+          </td>
+          <td style="padding: 15px; color: #E0E0E0;">
+            <sup>n</sup>C<sub>r</sub> = <sup>n</sup>P<sub>r</sub> / r!
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <h1>Fundamental Principles of Counting</h1>
+    <p>
+      These principles are the building blocks of combinatorics, allowing us to calculate the number of possible outcomes without listing them all manually.
+    </p>
+
+    <hr />
+
+    <h3>1. Addition Rule (OR Rule)</h3>
+    <p>
+      If two tasks are <span class="bg-red">mutually exclusive</span> (they cannot happen at the same time), the total number of ways to perform <strong>either</strong> task is the <strong>sum</strong> of their individual ways.
+    </p>
+    
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = m + n
+    </div>
+
+    <ul>
+      <li>
+        <strong>Keyword:</strong> "OR" (Task A <strong>OR</strong> Task B).
+      </li>
+      <li>
+        <strong>Condition:</strong> The events are disjoint (no overlap).
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> You want to travel from City A to City B. There are <strong>3 Bus routes</strong> and <strong>2 Train routes</strong>. You can choose <span class="text-orange">one mode</span> of transport (Bus OR Train) in: <br>
+      <strong>3 + 2 = 5 ways</strong>.
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Multiplication Rule (AND Rule)</h3>
+    <p>
+      If a task consists of two sub-tasks performed in <span class="bg-green">succession</span> (one after the other), the total number of ways to perform the entire task is the <strong>product</strong> of the ways to perform each sub-task.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = m &times; n
+    </div>
+
+    <ul>
+      <li>
+        <strong>Keyword:</strong> "AND" (Task A <strong>AND</strong> then Task B).
+      </li>
+      <li>
+        <strong>Condition:</strong> The events are independent stages of a larger task.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> You have <strong>3 Shirts</strong> and <strong>2 Pants</strong>. To get dressed, you need to choose a shirt <span class="text-green">AND</span> a pant. <br>
+      <strong>3 &times; 2 = 6 ways</strong> to dress up.
+    </div>
+
+    
+
+    <hr />
+
+    <h1>Factorial Notation (n!)</h1>
+    <p>
+      The notation <strong>n!</strong> (read as "n factorial") represents the product of the first <strong>n</strong> natural numbers.
+    </p>
+
+    <h3>1. Definition & Properties</h3>
+    <p>
+      For a positive integer <strong>n</strong>:
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      n! = n &times; (n&minus;1) &times; (n&minus;2) &times; ... &times; 3 &times; 2 &times; 1
+    </div>
+
+    <h4>Key Properties:</h4>
+    <ul>
+      <li>
+        <strong>0! = 1</strong> (This is a definition to make formulas like <sup>n</sup>C<sub>n</sub> work).
+      </li>
+      <li>
+        <strong>1! = 1</strong>
+      </li>
+      <li>
+        <strong>Recursive Property:</strong> n! = n &times; (n&minus;1)!
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>2. Legendre’s Formula</h3>
+    <p>
+      A formula used to find the <span class="bg-purple">highest power (exponent) of a prime number p</span> that divides <strong>n!</strong> exactly.
+    </p>
+    <p>
+      The exponent of prime <strong>p</strong> in <strong>n!</strong>, denoted as E<sub>p</sub>(n!), is calculated as:
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      E<sub>p</sub>(n!) = [n/p] + [n/p<sup>2</sup>] + [n/p<sup>3</sup>] + ...
+    </div>
+
+    <ul>
+      <li>
+        <strong>[x]</strong> represents the <strong>Greatest Integer Function</strong> (just take the integer part, ignore decimals).
+      </li>
+      <li>
+        Stop adding terms when <strong>p<sup>k</sup> > n</strong> (because the value becomes 0).
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find the highest power of <strong>3</strong> in <strong>10!</strong>.<br><br>
+      <strong>Step 1:</strong> [10 / 3] = 3.33 &rarr; <strong>3</strong><br>
+      <strong>Step 2:</strong> [10 / 3<sup>2</sup>] = [10 / 9] = 1.11 &rarr; <strong>1</strong><br>
+      <strong>Step 3:</strong> [10 / 3<sup>3</sup>] = [10 / 27] &rarr; <strong>0</strong> (Stop here)<br><br>
+      <strong>Total = 3 + 1 = 4</strong>.<br>
+      <em>So, 3<sup>4</sup> is the highest power of 3 that divides 10!.</em>
+    </div>
+
+    <br>
+
+    <h1>Linear Permutations (No Repetition)</h1>
+    <p>
+      Linear permutation refers to the arrangement of distinct objects in a <span class="bg-blue">straight line</span> where the order matters and <span class="text-blue">no object is repeated</span>.
+    </p>
+
+    <hr />
+
+    <h3>1. Arranging All Objects</h3>
+    <p>
+      When arranging <strong>all</strong> <strong>n</strong> distinct objects in a row, the number of ways is given by the factorial of n.
+    </p>
+    
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = n!
+    </div>
+
+    <ul>
+      <li>
+        <strong>Logic:</strong> The 1st spot has <strong>n</strong> choices, the 2nd spot has <strong>n&minus;1</strong> choices, and so on.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> In how many ways can the letters of the word <strong>"CAT"</strong> be arranged?<br>
+      Since there are 3 distinct letters (n=3):<br>
+      <strong>3! = 3 &times; 2 &times; 1 = 6 ways</strong>.<br>
+      <em>(CAT, CTA, ACT, ATC, TCA, TAC)</em>
+    </div>
+
+    <hr />
+
+    <h3>2. Arranging 'r' Objects from 'n'</h3>
+    <p>
+      When arranging only <strong>r</strong> objects selected from a total of <strong>n</strong> distinct objects, we use the permutation formula <strong><sup>n</sup>P<sub>r</sub></strong>.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      <sup>n</sup>P<sub>r</sub> = n! / (n &minus; r)!
+    </div>
+
+    <ul>
+      <li>
+        <strong>n:</strong> Total number of distinct objects available.
+      </li>
+      <li>
+        <strong>r:</strong> Number of spaces to fill (or objects to pick).
+      </li>
+      <li>
+        <strong>Condition:</strong> Repetition is <span class="bg-red">not allowed</span>.
+      </li>
+    </ul>
+
+    [Image of linear permutation formula nPr diagram]
+
+    <div class="example-box">
+      <span class="example-label">Example</span> 10 athletes are running a race. In how many ways can the <strong>Gold, Silver, and Bronze</strong> medals be awarded?<br><br>
+      Here, n = 10 (athletes) and r = 3 (medals).<br>
+      <strong><sup>10</sup>P<sub>3</sub></strong> = 10! / (10 &minus; 3)! <br>
+      = 10! / 7! <br>
+      = 10 &times; 9 &times; 8 = <strong>720 ways</strong>.
+    </div>
+
+    <br>
+
+    <h1>Permutations with Repetition</h1>
+    <p>
+      In many real-world scenarios, objects can be repeated, or some objects are identical to one another. This changes how we calculate the total arrangements.
+    </p>
+
+    <hr />
+
+    <h3>1. Repetition Allowed (Reusing Objects)</h3>
+    <p>
+      When arranging <strong>r</strong> positions using <strong>n</strong> distinct objects, and <span class="bg-blue">repetition is allowed</span> (the same object can be used multiple times), the total number of arrangements is:
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = n<sup>r</sup>
+    </div>
+
+    <ul>
+      <li>
+        <strong>Logic:</strong> The 1st place has <strong>n</strong> choices, the 2nd place also has <strong>n</strong> choices, and so on for <strong>r</strong> places.
+      </li>
+      <li>
+        <strong>n &times; n &times; ... (r times) = n<sup>r</sup></strong>
+      </li>
+    </ul>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> A combination lock has <strong>3 dials</strong>, and each dial has numbers from <strong>0 to 9</strong> (10 choices). <br>
+      Since a number can be reused (e.g., 9-9-9 is valid):<br>
+      <strong>10 &times; 10 &times; 10 = 10<sup>3</sup> = 1000 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>2. Permutation with Identical Objects</h3>
+    <p>
+      When arranging <strong>n</strong> objects where <span class="bg-green">some objects are identical</span> (indistinguishable), we must divide out the repetitive arrangements to avoid double-counting.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Ways = n! / (p! &times; q! &times; r! ...)
+    </div>
+
+    <ul>
+      <li>
+        <strong>n:</strong> Total number of objects.
+      </li>
+      <li>
+        <strong>p, q, r:</strong> The counts of each identical item type.
+      </li>
+    </ul>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Classic Example</span> How many ways can you arrange the letters of <strong>MISSISSIPPI</strong>?<br><br>
+      <strong>Total Letters (n):</strong> 11<br>
+      <strong>Identical Counts:</strong><br>
+      - <strong>S:</strong> 4 times<br>
+      - <strong>I:</strong> 4 times<br>
+      - <strong>P:</strong> 2 times<br>
+      - <strong>M:</strong> 1 time<br><br>
+      <strong>Formula:</strong> 11! / (4! &times; 4! &times; 2! &times; 1!)<br>
+      = 39,916,800 / (24 &times; 24 &times; 2)<br>
+      = <strong>34,650 ways</strong>.
+    </div>
+
+    <br>
+
+    <h1>Restricted Permutations</h1>
+    <p>
+      In many permutation problems, constraints are applied to the arrangement. We use specific methods to handle conditions like objects being "always together," "never together," or "fixed."
+    </p>
+
+    <hr />
+
+    <h3>1. String Method (Always Together)</h3>
+    <p>
+      Used when specific objects must <span class="bg-blue">always remain together</span>.
+    </p>
+    
+    <h4>Technique:</h4>
+    <ol>
+      <li>
+        <strong>Tie them up:</strong> Treat the group of restricted objects as a <span class="text-blue">single unit</span> (or a "string" tied around them).
+      </li>
+      <li>
+        <strong>Arrange External:</strong> Count this single unit along with the other remaining objects and arrange them.
+      </li>
+      <li>
+        <strong>Arrange Internal:</strong> Arrange the objects <em>inside</em> the unit itself.
+      </li>
+    </ol>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total Ways = (Arrangement of Units) &times; (Internal Arrangement)
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> In the word <strong>"DETAIL"</strong>, how many ways can the vowels (E, A, I) come together?<br><br>
+      <strong>Step 1:</strong> Consonants = {D, T, L} (3). Vowels = {E, A, I} (Treat as 1 Unit).<br>
+      <strong>Step 2:</strong> Total entities = 3 Consonants + 1 Vowel Unit = <strong>4</strong>.<br>
+      Arrangement = <strong>4!</strong> = 24.<br>
+      <strong>Step 3:</strong> Internal arrangement of {E, A, I} = <strong>3!</strong> = 6.<br><br>
+      <strong>Total = 24 &times; 6 = 144 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>2. Gap Method (Never Together)</h3>
+    <p>
+      Used when specific objects must <span class="bg-red">never be together</span> (no two of them can sit side-by-side).
+    </p>
+
+    <h4>Technique:</h4>
+    <ol>
+      <li>
+        <strong>Arrange Others First:</strong> Arrange the objects that have <em>no restriction</em> first. Let's say there are <strong>m</strong> such objects.
+      </li>
+      <li>
+        <strong>Identify Gaps:</strong> These <strong>m</strong> objects create <strong>m + 1</strong> gaps (including the ends).
+      </li>
+      <li>
+        <strong>Fill Gaps:</strong> Place the restricted objects (say <strong>n</strong> objects) into these gaps.
+      </li>
+    </ol>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total Ways = m! &times; <sup>(m+1)</sup>P<sub>n</sub>
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> <strong>5 Boys</strong> and <strong>3 Girls</strong>. Girls must never sit together.<br><br>
+      <strong>Step 1:</strong> Arrange 5 Boys first. Ways = <strong>5!</strong> = 120.<br>
+      <strong>Step 2:</strong> 5 Boys create <strong>6 Gaps</strong>: <br>
+      _ B _ B _ B _ B _ B _<br>
+      <strong>Step 3:</strong> Place 3 Girls in 6 Gaps = <strong><sup>6</sup>P<sub>3</sub></strong> = 6 &times; 5 &times; 4 = 120.<br><br>
+      <strong>Total = 120 &times; 120 = 14,400 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>3. Fixed Positions</h3>
+    <p>
+      Used when specific objects occupy <span class="bg-green">specific places</span>.
+    </p>
+    
+    <h4>Technique:</h4>
+    <ul>
+      <li>
+        Remove the fixed objects from the pool of items to be arranged.
+      </li>
+      <li>
+        Place them in their fixed spots (this counts as <strong>1 way</strong>).
+      </li>
+      <li>
+        Arrange the remaining objects in the remaining empty spots.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Arranging the word <strong>"SYSTEM"</strong> such that <strong>S</strong> is always first.<br><br>
+      <strong>Step 1:</strong> Fix S at position 1. (1 way).<br>
+      <strong>Step 2:</strong> Remaining letters: Y, S, T, E, M (5 letters).<br>
+      <strong>Step 3:</strong> Arrange remaining 5 letters = <strong>5!</strong> = 120.<br><br>
+      <strong>Total = 1 &times; 120 = 120 ways</strong>.
+    </div>
+
+    <br>
+
+    <h1>Circular Permutations</h1>
+    <p>
+      <span class="bg-blue">Circular Permutation</span> refers to the arrangement of objects in a closed loop (like a circle). Unlike linear permutations, there is no fixed "starting point" or "ending point."
+    </p>
+
+    <hr />
+
+    <h3>1. Circular Table (Clockwise &ne; Anti-Clockwise)</h3>
+    <p>
+      When arranging <strong>n</strong> distinct objects around a circular table, the relative order matters. However, rotating the entire circle doesn't change the arrangement.
+    </p>
+    <p>
+      To fix this, we <span class="text-green">keep one object fixed</span> and arrange the remaining <strong>(n&minus;1)</strong> objects.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = (n &minus; 1)!
+    </div>
+
+    <ul>
+      <li>
+        <strong>Context:</strong> Used for people sitting at a table, conference meetings, etc.
+      </li>
+      <li>
+        <strong>Clockwise vs. Anti-Clockwise:</strong> In these cases, sitting A-B-C (clockwise) is <span class="text-red">different</span> from A-C-B (clockwise). The directions are distinct.
+      </li>
+    </ul>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> In how many ways can <strong>5 friends</strong> sit around a round table?<br><br>
+      Here, n = 5.<br>
+      Formula: (5 &minus; 1)! = <strong>4!</strong><br>
+      = 4 &times; 3 &times; 2 &times; 1 = <strong>24 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>2. Necklace / Garland (Clockwise = Anti-Clockwise)</h3>
+    <p>
+      When arranging objects like beads on a necklace or flowers in a garland, we can <span class="bg-purple">flip the object over</span>.
+    </p>
+    <p>
+      Because of this flipping capability, the <strong>Clockwise</strong> arrangement and the <strong>Anti-Clockwise</strong> arrangement look exactly the same. They count as <span class="text-purple">one single arrangement</span>.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = (n &minus; 1)! / 2
+    </div>
+
+    <ul>
+      <li>
+        <strong>Context:</strong> Necklaces, garlands, beads, bracelets.
+      </li>
+      <li>
+        <strong>Logic:</strong> Since the left view and right view are identical (due to symmetry/flipping), we divide the circular permutation by 2.
+      </li>
+    </ul>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> How many distinct necklaces can be formed using <strong>6 different coloured beads</strong>?<br><br>
+      Here, n = 6.<br>
+      Formula: (6 &minus; 1)! / 2<br>
+      = 5! / 2<br>
+      = 120 / 2 = <strong>60 ways</strong>.
+    </div>
+
+    <br>
+    
+<h1>Dictionary Problems (Rank of a Word)</h1>
+    <p>
+      Finding the <span class="bg-blue">rank</span> of a word involves calculating its position if all possible permutations of its letters were arranged alphabetically (like in a dictionary).
+    </p>
+
+    <hr />
+
+    <h3>The "Right-Side Shortcut" Method</h3>
+    <p>
+      Instead of manually listing words, use this 3-step formula. It is faster and less prone to error if you follow the rules strictly.
+    </p>
+
+    <h4>Rules:</h4>
+    <ol>
+      <li>
+        <strong>Write the word</strong> with some spacing between letters.
+      </li>
+      <li>
+        <strong>Count Smaller on Right:</strong> For each letter, count how many letters to its <em>right</em> are alphabetically smaller than it.
+      </li>
+      <li>
+        <strong>Divide by Repetition:</strong> If there are duplicate letters currently on the right (including the current one), divide by their factorial ($p!$).
+      </li>
+      <li>
+        <strong>Multiply by Factorial:</strong> Multiply the result by $(n-1)!$, where $n$ is the number of letters remaining to the right.
+      </li>
+    </ol>
+
+    
+
+    <hr />
+
+    <h3>Example 1: Distinct Letters (MOTHER)</h3>
+    <p>Find the rank of <strong>MOTHER</strong>.</p>
+    <p><em>Alphabetical Order:</em> E, H, M, O, R, T</p>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: 1px solid #444;">
+      <tr style="background-color: #333; color: #fff;">
+        <th style="padding: 10px; border: 1px solid #555;">Letter</th>
+        <th style="padding: 10px; border: 1px solid #555;">Right Side</th>
+        <th style="padding: 10px; border: 1px solid #555;">Count Smaller</th>
+        <th style="padding: 10px; border: 1px solid #555;">Factorial</th>
+        <th style="padding: 10px; border: 1px solid #555;">Value</th>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">M</td>
+        <td>O, T, H, E, R</td>
+        <td><strong>2</strong> (E, H)</td>
+        <td>5!</td>
+        <td>2 &times; 120 = <strong>240</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">O</td>
+        <td>T, H, E, R</td>
+        <td><strong>2</strong> (E, H)</td>
+        <td>4!</td>
+        <td>2 &times; 24 = <strong>48</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">T</td>
+        <td>H, E, R</td>
+        <td><strong>3</strong> (H, E, R)</td>
+        <td>3!</td>
+        <td>3 &times; 6 = <strong>18</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">H</td>
+        <td>E, R</td>
+        <td><strong>1</strong> (E)</td>
+        <td>2!</td>
+        <td>1 &times; 2 = <strong>2</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">E</td>
+        <td>R</td>
+        <td><strong>0</strong></td>
+        <td>1!</td>
+        <td><strong>0</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">R</td>
+        <td>(None)</td>
+        <td><strong>0</strong></td>
+        <td>0!</td>
+        <td><strong>0</strong></td>
+      </tr>
+    </table>
+
+    <div class="example-box" style="text-align: center;">
+      <strong>Sum:</strong> 240 + 48 + 18 + 2 + 0 + 0 = <strong>308</strong><br>
+      <strong>Rank:</strong> 308 + 1 = <span class="text-green" style="font-size: 1.2em; font-weight: bold;">309</span>
+    </div>
+
+    <hr />
+
+    <h3>Example 2: Repeated Letters (SMALL)</h3>
+    <p>Find the rank of <strong>SMALL</strong>.</p>
+    <p><em>Alphabetical Order:</em> A, L, L, M, S</p>
+    <p><strong>Note:</strong> When calculating, divide by the factorial of any repeating letters <em>remaining</em> in the set (current + right).</p>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: 1px solid #444;">
+      <tr style="background-color: #333; color: #fff;">
+        <th style="padding: 10px;">Letter</th>
+        <th style="padding: 10px;">Right Side</th>
+        <th style="padding: 10px;">Count Smaller</th>
+        <th style="padding: 10px;">Repetition Divisor</th>
+        <th style="padding: 10px;">Calculation</th>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">S</td>
+        <td>M, A, L, L</td>
+        <td><strong>4</strong> (M, A, L, L)</td>
+        <td>2! (for two Ls)</td>
+        <td>(4 &times; 4!) / 2! = <strong>48</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">M</td>
+        <td>A, L, L</td>
+        <td><strong>3</strong> (A, L, L)</td>
+        <td>2! (for two Ls)</td>
+        <td>(3 &times; 3!) / 2! = <strong>9</strong></td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">A</td>
+        <td>L, L</td>
+        <td><strong>0</strong></td>
+        <td>2! (for two Ls)</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">L</td>
+        <td>L</td>
+        <td><strong>0</strong></td>
+        <td>-</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold; color: #90CAF9;">L</td>
+        <td>(None)</td>
+        <td><strong>0</strong></td>
+        <td>-</td>
+        <td>0</td>
+      </tr>
+    </table>
+
+    <div class="example-box" style="text-align: center;">
+      <strong>Sum:</strong> 48 + 9 + 0 + 0 + 0 = <strong>57</strong><br>
+      <strong>Rank:</strong> 57 + 1 = <span class="text-green" style="font-size: 1.2em; font-weight: bold;">58</span>
+    </div>
+
+    <br>
+
+    <h1>Combinations (Selections)</h1>
+    <p>
+      <span class="bg-blue">Combination</span> refers to the selection of objects where the <strong>order does not matter</strong>. It answers the question: <em>"How many ways can I pick a group?"</em>
+    </p>
+
+    <hr />
+
+    <h3>1. Definition & Formula</h3>
+    <p>
+      The number of ways to select <strong>r</strong> objects from <strong>n</strong> distinct objects is denoted by <strong><sup>n</sup>C<sub>r</sub></strong> (or sometimes C(n,r)).
+    </p>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> = n! / [ r! &times; (n &minus; r)! ]
+    </div>
+
+    <ul>
+      <li>
+        <strong>n:</strong> Total items available.
+      </li>
+      <li>
+        <strong>r:</strong> Items to be selected.
+      </li>
+      <li>
+        <strong>Condition:</strong> Order is irrelevant (Team {A, B} is the same as Team {B, A}).
+      </li>
+    </ul>
+
+    
+
+    <hr />
+
+    <h3>2. Important Properties</h3>
+
+    <h4>a. Symmetry Property</h4>
+    <p>
+      Selecting <strong>r</strong> items to <em>keep</em> is the same as selecting <strong>(n&minus;r)</strong> items to <em>discard</em>.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> = <sup>n</sup>C<sub>n&minus;r</sub>
+    </div>
+    <p><em>Use this to simplify calculations. Calculating <sup>100</sup>C<sub>98</sub> is hard; calculating <sup>100</sup>C<sub>2</sub> is easy.</em></p>
+
+    <h4>b. Pascal’s Law</h4>
+    <p>
+      The sum of two consecutive combinations equals the combination of the next higher index.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> + <sup>n</sup>C<sub>r&minus;1</sub> = <sup>n+1</sup>C<sub>r</sub>
+    </div>
+
+    <h4>c. Ratio Relationship</h4>
+    <p>
+      Useful for solving algebraic problems involving ratios of consecutive combinations.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> / <sup>n</sup>C<sub>r&minus;1</sub> = (n &minus; r + 1) / r
+    </div>
+
+    <hr />
+
+    <h3>3. Examples</h3>
+
+    <div class="example-box">
+      <span class="example-label">Basic Example</span> In how many ways can a team of <strong>3 students</strong> be selected from a class of <strong>10</strong>?<br><br>
+      <strong><sup>10</sup>C<sub>3</sub></strong> = 10! / (3! &times; 7!)<br>
+      = (10 &times; 9 &times; 8) / (3 &times; 2 &times; 1)<br>
+      = 720 / 6 = <strong>120 ways</strong>.
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Symmetry Example</span> Evaluate <strong><sup>50</sup>C<sub>48</sub></strong>.<br><br>
+      Using Symmetry: <sup>50</sup>C<sub>48</sub> = <sup>50</sup>C<sub>(50&minus;48)</sub> = <strong><sup>50</sup>C<sub>2</sub></strong><br>
+      = (50 &times; 49) / 2 <br>
+      = <strong>1225</strong>. (Much faster!)
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Ratio Example</span> If <sup>n</sup>C<sub>3</sub> / <sup>n</sup>C<sub>2</sub> = 3, find n.<br><br>
+      Using the Ratio Formula: <strong>(n &minus; 3 + 1) / 3 = 3</strong><br>
+      (n &minus; 2) / 3 = 3<br>
+      n &minus; 2 = 9<br>
+      <strong>n = 11</strong>.
+    </div>
+
+    <br>
+
+    <h1>Properties of Combinations (Advanced)</h1>
+    <p>
+      Beyond the basic definition, combinations follow several powerful mathematical laws used to simplify complex series and binomial expansions.
+    </p>
+
+    <hr />
+
+    <h3>1. Summation Properties</h3>
+
+    <h4>a. Sum of All Binomial Coefficients</h4>
+    <p>
+      The sum of all possible combinations of <strong>n</strong> objects (selecting 0, 1, 2, ... up to n) equals <strong>2<sup>n</sup></strong>.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>0</sub> + <sup>n</sup>C<sub>1</sub> + <sup>n</sup>C<sub>2</sub> + ... + <sup>n</sup>C<sub>n</sub> = 2<sup>n</sup>
+    </div>
+    <ul>
+      <li>
+        <strong>Logic:</strong> This represents the total number of subsets of a set with n elements.
+      </li>
+    </ul>
+
+    <h4>b. Sum of Even vs. Odd Coefficients</h4>
+    <p>
+      The sum of combinations at even places equals the sum of combinations at odd places.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>0</sub> + <sup>n</sup>C<sub>2</sub> + ...  =  <sup>n</sup>C<sub>1</sub> + <sup>n</sup>C<sub>3</sub> + ...  =  2<sup>n&minus;1</sup>
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Reduction & Extraction Properties</h3>
+    <p>
+      These properties allow you to "extract" the index numbers from the combination formula, which is extremely useful in calculus and series summation problems.
+    </p>
+
+    <h4>a. The "n/r" Extraction Rule</h4>
+    <div class="example-box" style="text-align: center; font-weight: bold; font-size: 1.2em;">
+      <sup>n</sup>C<sub>r</sub> = (n / r) &times; <sup>n&minus;1</sup>C<sub>r&minus;1</sub>
+    </div>
+    <p>
+      <em>Example:</em> <sup>10</sup>C<sub>4</sub> = (10/4) &times; <sup>9</sup>C<sub>3</sub>
+    </p>
+
+    <h4>b. Double Extraction</h4>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> = [ n(n&minus;1) / r(r&minus;1) ] &times; <sup>n&minus;2</sup>C<sub>r&minus;2</sub>
+    </div>
+
+    <hr />
+
+    <h3>3. Maximizing Combinations</h3>
+    <p>
+      The value of <strong><sup>n</sup>C<sub>r</sub></strong> is not constant; it increases and then decreases as r grows. It reaches its <strong>Maximum Value</strong> at the middle.
+    </p>
+
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 15px; text-align: left;">If 'n' is...</th>
+          <th style="padding: 15px; text-align: left;">Maximum at r =</th>
+          <th style="padding: 15px; text-align: left;">Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Even</td>
+          <td style="padding: 15px; color: #E0E0E0;">n / 2</td>
+          <td style="padding: 15px; color: #E0E0E0;">For <sup>6</sup>C<sub>r</sub>, max is <strong><sup>6</sup>C<sub>3</sub></strong></td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">Odd</td>
+          <td style="padding: 15px; color: #E0E0E0;">(n&minus;1)/2 <strong>AND</strong> (n+1)/2</td>
+          <td style="padding: 15px; color: #E0E0E0;">For <sup>5</sup>C<sub>r</sub>, max is <strong><sup>5</sup>C<sub>2</sub></strong> & <strong><sup>5</sup>C<sub>3</sub></strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h3>4. Special Identities</h3>
+
+    <h4>a. Hockey Stick Identity</h4>
+    <p>
+      The sum of combinations along a diagonal in Pascal's Triangle equals the value "below" the last term (resembling a hockey stick shape).
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>r</sup>C<sub>r</sub> + <sup>r+1</sup>C<sub>r</sub> + <sup>r+2</sup>C<sub>r</sub> + ... + <sup>n</sup>C<sub>r</sub> = <sup>n+1</sup>C<sub>r+1</sub>
+    </div>
+
+    
+
+    <h4>b. Vandermonde's Identity</h4>
+    <p>
+      Used when selecting items from two distinct groups (e.g., Boys and Girls).
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>m</sup>C<sub>0</sub>&times;<sup>n</sup>C<sub>r</sub> + <sup>m</sup>C<sub>1</sub>&times;<sup>n</sup>C<sub>r&minus;1</sub> + ... = <sup>m+n</sup>C<sub>r</sub>
+    </div>
+    <ul>
+      <li>
+        Basically: Sum of (Ways to pick k from Group A &times; Ways to pick remaining from Group B) = Ways to pick total from (A+B).
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>5. Condition for Equality</h3>
+    <p>
+      If <strong><sup>n</sup>C<sub>x</sub> = <sup>n</sup>C<sub>y</sub></strong>, then one of two conditions must be true:
+    </p>
+    <ul>
+      <li>
+        <strong>Case 1:</strong> x = y
+      </li>
+      <li>
+        <strong>Case 2:</strong> x + y = n (Due to symmetry property)
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> If <sup>18</sup>C<sub>x</sub> = <sup>18</sup>C<sub>x+2</sub>, find x.<br><br>
+      Since x &ne; x+2, we must use Case 2:<br>
+      x + (x + 2) = 18<br>
+      2x = 16<br>
+      <strong>x = 8</strong>.
+    </div>
+
+    <br>
+
+    <h1>Restricted Selections (Committee Formation)</h1>
+    <p>
+      <span class="bg-blue">Restricted Selection</span> refers to forming groups or committees where specific conditions must be met. These conditions usually fall into two categories: specific individuals must be included/excluded, or quantity constraints like "at least" or "at most".
+    </p>
+
+    <hr />
+
+    <h3>1. Specific Inclusion or Exclusion</h3>
+    <p>
+      When particular objects (or people) are mandatory or forbidden in the selection.
+    </p>
+
+    <h4>a. Always Include 'k' Specific Items</h4>
+    <p>
+      If <strong>k</strong> specific items <em>must</em> be in the group of size <strong>r</strong>, you only need to choose the remaining <strong>(r &minus; k)</strong> spots from the remaining <strong>(n &minus; k)</strong> pool.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Ways = <sup>n&minus;k</sup>C<sub>r&minus;k</sub>
+    </div>
+
+    <h4>b. Always Exclude 'k' Specific Items</h4>
+    <p>
+      If <strong>k</strong> specific items must <em>never</em> be in the group, remove them from the pool entirely. You must choose all <strong>r</strong> spots from the remaining <strong>(n &minus; k)</strong> pool.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Ways = <sup>n&minus;k</sup>C<sub>r</sub>
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> A cricket team of <strong>11</strong> is to be selected from <strong>15</strong> players.<br>
+      1. <strong>Captain must be included:</strong> Remove Captain (1). Select remaining 10 from 14. <br>
+      &rarr; <strong><sup>14</sup>C<sub>10</sub></strong>.<br><br>
+      2. <strong>Injured player must be excluded:</strong> Remove Injured (1). Select full 11 from 14.<br>
+      &rarr; <strong><sup>14</sup>C<sub>11</sub></strong>.
+    </div>
+
+    <hr />
+
+    <h3>2. "At Least" and "At Most" (Case Analysis)</h3>
+    <p>
+      These problems require breaking the condition down into <span class="bg-purple">mutually exclusive cases</span> and adding the results (Addition Rule).
+    </p>
+    
+    
+
+    <h4>a. "At Least" (Minimum Limit)</h4>
+    <p>
+      Start from the minimum requirement and go up to the maximum possible.
+    </p>
+    <ul>
+      <li>
+        <em>"At least 3 Boys"</em> means: (Exactly 3) + (Exactly 4) + ...
+      </li>
+    </ul>
+
+    <h4>b. "At Most" (Maximum Limit)</h4>
+    <p>
+      Start from the maximum allowed and go down to zero.
+    </p>
+    <ul>
+      <li>
+        <em>"At most 2 Girls"</em> means: (Exactly 2) + (Exactly 1) + (Exactly 0).
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Committee Example</span> Form a committee of <strong>5 members</strong> from <strong>4 Boys</strong> and <strong>3 Girls</strong> such that it has <strong>at least 3 Boys</strong>.<br><br>
+      <strong>Total Seats:</strong> 5<br>
+      <strong>Pool:</strong> 4 Boys, 3 Girls.<br><br>
+      
+      <strong>Case 1: Exactly 3 Boys</strong> (Remaining 2 must be Girls)<br>
+      Select 3 from 4 Boys <span class="text-green">AND</span> 2 from 3 Girls.<br>
+      &rarr; <sup>4</sup>C<sub>3</sub> &times; <sup>3</sup>C<sub>2</sub> = 4 &times; 3 = <strong>12</strong>.<br><br>
+
+      <strong>Case 2: Exactly 4 Boys</strong> (Remaining 1 must be Girl)<br>
+      Select 4 from 4 Boys <span class="text-green">AND</span> 1 from 3 Girls.<br>
+      &rarr; <sup>4</sup>C<sub>4</sub> &times; <sup>3</sup>C<sub>1</sub> = 1 &times; 3 = <strong>3</strong>.<br><br>
+
+      <strong>Total Ways (Case 1 + Case 2):</strong> 12 + 3 = <strong>15 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>3. Selection from Distinct Groups</h3>
+    <p>
+      When selecting a team that requires a mix of different types of members (e.g., Bowlers and Batsmen), use the Multiplication Rule between the groups.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total = (Ways to pick Group A) &times; (Ways to pick Group B)
+    </div>
+
+    <br>
+
+    <h1>Selection from Identical Objects</h1>
+    <p>
+      <span class="bg-blue">Selection from Identical Objects</span> differs from standard combinations because the items are indistinguishable. Picking "Apple A" is no different from picking "Apple B" if they look exactly the same.
+    </p>
+
+    <hr />
+
+    <h3>1. Selecting from 'n' Identical Objects</h3>
+    <p>
+      Since all objects are the same, the only thing that distinguishes one selection from another is the <strong>quantity</strong> selected.
+    </p>
+
+    <ul>
+      <li>
+        <strong>Selecting exactly 'r' objects:</strong> There is only <span class="bg-green">1 way</span>. (Just grab any $r$ of them).
+      </li>
+      <li>
+        <strong>Selecting ANY number of objects (0 to n):</strong> You can choose 0, 1, 2, ... up to n.
+        <br>Total ways = <span class="text-green" style="font-weight: bold;">n + 1</span>.
+      </li>
+      <li>
+        <strong>Selecting AT LEAST ONE object:</strong> Remove the "0 selected" case.
+        <br>Total ways = <span class="text-green" style="font-weight: bold;">n</span>.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> You have <strong>5 identical Coins</strong>.
+      <ul>
+        <li>Ways to select exactly 2 coins: <strong>1 way</strong>.</li>
+        <li>Ways to select any number of coins (0 to 5): <strong>6 ways</strong>.</li>
+      </ul>
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Selection from Mixed Groups (General Selection)</h3>
+    <p>
+      When you have a collection containing some identical sets and some distinct items, we use the multiplication rule on the choices available for each group.
+    </p>
+
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total Selections = [(p+1)(q+1)(r+1)...2<sup>k</sup>] &minus; 1
+    </div>
+
+    <ul>
+      <li>
+        <strong>p, q, r...:</strong> Counts of identical items of different types (e.g., 3 Apples, 4 Bananas).
+      </li>
+      <li>
+        <strong>k:</strong> Count of distinct items (e.g., 1 Mango, 1 Kiwi).
+      </li>
+      <li>
+        <strong>The "-1":</strong> Subtracts the case where <strong>nothing</strong> is selected (empty set).
+      </li>
+    </ul>
+
+    <h4>Logic:</h4>
+    <ul>
+      <li>
+        For <strong>p identical items</strong>, you have <strong>p+1</strong> choices (take 0, 1, 2... or p).
+      </li>
+      <li>
+        For <strong>k distinct items</strong>, each item has <strong>2</strong> choices (Take it or Leave it) &rarr; <strong>2<sup>k</sup></strong>.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find the number of ways to select at least one fruit from: <strong>3 Identical Apples</strong>, <strong>4 Identical Oranges</strong>, and <strong>2 Distinct Pears</strong>.<br><br>
+      <strong>Step 1 (Apples):</strong> Choices = 3 + 1 = <strong>4</strong> (0,1,2,3).<br>
+      <strong>Step 2 (Oranges):</strong> Choices = 4 + 1 = <strong>5</strong> (0,1,2,3,4).<br>
+      <strong>Step 3 (Pears):</strong> Distinct. Choices = <strong>2<sup>2</sup></strong> = 4.<br><br>
+      <strong>Total Ways:</strong> (4 &times; 5 &times; 4) &minus; 1 <br>
+      = 80 &minus; 1 = <strong>79 ways</strong>.
+    </div>
+
+    <br>
+
+    <h1>Number Formation Problems</h1>
+    <p>
+      Number formation problems involve creating specific numbers using a set of given digits under certain rules. The most common constraints include repetition, the position of zero, and divisibility.
+    </p>
+
+    <hr />
+
+    <h3>1. Forming n-Digit Numbers</h3>
+    <p>
+      We use the "Box Method" (or Slot Method) to visualize these problems.
+    </p>
+
+    <h4>a. Without Repetition</h4>
+    <p>
+      Once a digit is placed in a slot, it cannot be used again.
+    </p>
+    <div class="example-box">
+      <span class="example-label">Example</span> Form <strong>2-digit</strong> numbers using digits <strong>1, 2, 3</strong>.<br><br>
+      <strong>Tens Place:</strong> 3 choices (1, 2, 3).<br>
+      <strong>Units Place:</strong> 2 choices (remaining digits).<br><br>
+      <strong>Total = 3 &times; 2 = 6 numbers</strong>.<br>
+      <em>(Numbers: 12, 13, 21, 23, 31, 32)</em>
+    </div>
+
+    <h4>b. With Repetition</h4>
+    <p>
+      A digit can be reused in every slot.
+    </p>
+    <div class="example-box">
+      <span class="example-label">Example</span> Form <strong>2-digit</strong> numbers using digits <strong>1, 2, 3</strong>.<br><br>
+      <strong>Tens Place:</strong> 3 choices.<br>
+      <strong>Units Place:</strong> 3 choices.<br><br>
+      <strong>Total = 3 &times; 3 = 9 numbers</strong>.<br>
+      <em>(Includes 11, 22, 33)</em>
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Handling Zero (The Leading Digit Rule)</h3>
+    <p>
+      <span class="bg-red">CRITICAL RULE:</span> Zero cannot be the first digit of a number. (e.g., "052" is a 2-digit number, not a 3-digit number).
+    </p>
+
+    <h4>Method:</h4>
+    <ul>
+      <li>
+        <strong>Step 1:</strong> Fill the first position (leftmost) first. It can take any non-zero digit.
+      </li>
+      <li>
+        <strong>Step 2:</strong> Fill the remaining positions including zero.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Form <strong>3-digit</strong> numbers using <strong>0, 1, 2, 3</strong> (No Repetition).<br><br>
+      <strong>1st Box (Hundreds):</strong> Can be {1, 2, 3} &rarr; <strong>3 choices</strong>.<br>
+      <strong>2nd Box (Tens):</strong> Can be {0, plus remaining 2} &rarr; <strong>3 choices</strong>.<br>
+      <strong>3rd Box (Units):</strong> Remaining 2 digits &rarr; <strong>2 choices</strong>.<br><br>
+      <strong>Total = 3 &times; 3 &times; 2 = 18 numbers</strong>.
+    </div>
+
+    <hr />
+
+    <h3>3. Divisibility Constraints</h3>
+    <p>
+      To satisfy divisibility, we must fill specific positions (usually the last digit) first.
+    </p>
+
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 15px; text-align: left;">Divisibility</th>
+          <th style="padding: 15px; text-align: left;">Condition</th>
+          <th style="padding: 15px; text-align: left;">Strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 2 (Even)</td>
+          <td style="padding: 15px; color: #E0E0E0;">Last digit is 0, 2, 4, 6, 8.</td>
+          <td style="padding: 15px; color: #E0E0E0;">Fill the <span class="text-green">Units Place</span> first with even options.</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 4</td>
+          <td style="padding: 15px; color: #E0E0E0;">Last two digits divisible by 4.</td>
+          <td style="padding: 15px; color: #E0E0E0;">Treat last two slots as a single block (e.g., 12, 24, 32).</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 5</td>
+          <td style="padding: 15px; color: #E0E0E0;">Last digit is 0 or 5.</td>
+          <td style="padding: 15px; color: #E0E0E0;">
+             <strong>Case 1:</strong> Ends in 0.<br>
+             <strong>Case 2:</strong> Ends in 5.<br>
+             (Solve separately and Add).
+          </td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 25</td>
+          <td style="padding: 15px; color: #E0E0E0;">Ends in 00, 25, 50, 75.</td>
+          <td style="padding: 15px; color: #E0E0E0;">Fix the last two digits and arrange the rest.</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 3</td>
+          <td style="padding: 15px; color: #E0E0E0;">Sum of digits divisible by 3.</td>
+          <td style="padding: 15px; color: #E0E0E0;">Select the digits <em>first</em> so their sum is a multiple of 3, <em>then</em> arrange.</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 15px; color: #90CAF9; font-weight: bold;">By 11</td>
+          <td style="padding: 15px; color: #E0E0E0;">(Sum Odd positions) &minus; (Sum Even positions) = 0 or 11.</td>
+          <td style="padding: 15px; color: #E0E0E0;">Complex; requires placing digits in odd/even slots carefully.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="example-box">
+      <span class="example-label">Example: Divisible by 5</span> Form 3-digit numbers using <strong>0, 1, 2, 5</strong> (No Repetition).<br><br>
+      <strong>Case 1: Ends in 0</strong><br>
+      Units place fixed as 0 (1 way). Remaining {1, 2, 5} for first two slots.<br>
+      3 &times; 2 &times; 1 = <strong>6 numbers</strong>.<br><br>
+      <strong>Case 2: Ends in 5</strong><br>
+      Units place fixed as 5 (1 way). First slot cannot be 0 (2 choices: 1, 2). Second slot (Remaining + 0) = 2 choices.<br>
+      2 &times; 2 &times; 1 = <strong>4 numbers</strong>.<br><br>
+      <strong>Total = 6 + 4 = 10 numbers</strong>.
+    </div>
+
+    <hr />
+
+    <h3>4. Sum of All Possible Numbers</h3>
+    <p>
+      Instead of writing out all numbers and adding them, we use a formula based on place value.
+    </p>
+
+    <h4>General Formula (No Repetition, No Zero)</h4>
+    <p>
+      For <strong>n</strong> distinct non-zero digits, forming n-digit numbers:
+    </p>
+    
+    <div class="example-box" style="text-align: center; font-size: 1.1em; font-weight: bold;">
+      Sum = (Sum of Digits) &times; (n &minus; 1)! &times; (111...111)
+    </div>
+    <p style="text-align: center; font-size: 0.9em; color: #ccc;">(Where "111..." appears n times)</p>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find sum of all 3-digit numbers formed by <strong>1, 2, 3</strong>.<br><br>
+      <strong>Sum of digits:</strong> 1 + 2 + 3 = 6.<br>
+      <strong>(n &minus; 1)!:</strong> (3 &minus; 1)! = 2! = 2.<br>
+      <strong>Repunit:</strong> 111 (since 3 digits).<br><br>
+      <strong>Total Sum</strong> = 6 &times; 2 &times; 111 = <strong>1332</strong>.
+    </div>
+
+    <h4>Why this works:</h4>
+    <p>
+      In the unit's place, each digit appears exactly <strong>(n&minus;1)!</strong> times. The same applies to the tens place, hundreds place, etc.
+    </p>
+
+    <br>
+
+    <h1>Geometry Applications (Counting Problems)</h1>
+    <p>
+      These problems use <span class="bg-blue">combinations</span> to count geometric figures like lines, triangles, diagonals, intersections, and parallelograms without manually drawing and counting them.
+    </p>
+
+    <hr />
+
+    <h3>1. Straight Lines from Points</h3>
+    <p>
+      To form a straight line, we need to select exactly <strong>2 points</strong>.
+    </p>
+
+    <h4>Case A: No Three Points are Collinear</h4>
+    <p>
+      If distinct points are scattered such that no three lie on a single line:
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Number of Lines = <sup>n</sup>C<sub>2</sub>
+    </div>
+
+    <h4>Case B: With Collinear Points</h4>
+    <p>
+      If <strong>p</strong> points lie on the same straight line, they do not form <sup>p</sup>C<sub>2</sub> distinct lines. They form only <span class="bg-red">1 single line</span>. We must subtract the extra counted lines and add back the 1 actual line.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total Lines = <sup>n</sup>C<sub>2</sub> &minus; <sup>p</sup>C<sub>2</sub> + 1
+    </div>
+
+    
+
+[Image of straight lines from collinear points diagram]
+
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find the number of lines from <strong>10 points</strong>, where <strong>4 are collinear</strong>.<br><br>
+      Total from 10 points: <sup>10</sup>C<sub>2</sub> = 45<br>
+      Minus lines from 4 collinear: <sup>4</sup>C<sub>2</sub> = 6<br>
+      Plus the 1 common line: + 1<br><br>
+      <strong>Result:</strong> 45 &minus; 6 + 1 = <strong>40 lines</strong>.
+    </div>
+
+    <hr />
+
+    <h3>2. Triangles from Points</h3>
+    <p>
+      To form a triangle, we need to select <strong>3 non-collinear points</strong>.
+    </p>
+
+    <h4>Case A: General Case</h4>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Number of Triangles = <sup>n</sup>C<sub>3</sub>
+    </div>
+
+    <h4>Case B: With Collinear Points</h4>
+    <p>
+      Points on the same line cannot form a triangle (they form a flat segment). We simply <span class="text-red">subtract</span> these impossible triangles. We do <strong>not</strong> add +1 (because 3 collinear points don't make a triangle at all).
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Total Triangles = <sup>n</sup>C<sub>3</sub> &minus; <sup>p</sup>C<sub>3</sub>
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> 8 points total, with 4 collinear.<br><br>
+      Total combinations: <sup>8</sup>C<sub>3</sub> = (8&times;7&times;6)/6 = 56<br>
+      Invalid combinations (collinear): <sup>4</sup>C<sub>3</sub> = 4<br><br>
+      <strong>Result:</strong> 56 &minus; 4 = <strong>52 triangles</strong>.
+    </div>
+
+    <hr />
+
+    <h3>3. Diagonals of a Polygon</h3>
+    <p>
+      A diagonal is formed by joining any two vertices, excluding the adjacent ones (which form the sides).
+    </p>
+    <ul>
+      <li>
+        <strong>Total lines joining vertices:</strong> <sup>n</sup>C<sub>2</sub>
+      </li>
+      <li>
+        <strong>Subtract the sides:</strong> n
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-weight: bold; font-size: 1.2em;">
+      Diagonals = [ n(n &minus; 3) ] / 2
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> How many diagonals in a <strong>Hexagon</strong> (n=6)?<br><br>
+      Formula: 6(6 &minus; 3) / 2<br>
+      = (6 &times; 3) / 2<br>
+      = 18 / 2 = <strong>9 diagonals</strong>.
+    </div>
+
+    <hr />
+
+    <h3>4. Points of Intersection</h3>
+
+    <h4>a. Intersection of Lines</h4>
+    <p>
+      If no lines are parallel, every pair of lines intersects at exactly <span class="bg-green">1 point</span>.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Intersections = <sup>n</sup>C<sub>2</sub>
+    </div>
+
+    <h4>b. Intersection of Circles</h4>
+    <p>
+      Two circles can intersect at a maximum of <span class="bg-purple">2 points</span>.
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Intersections = 2 &times; <sup>n</sup>C<sub>2</sub>
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find intersection points for <strong>5 Circles</strong>.<br><br>
+      Pairs of circles: <sup>5</sup>C<sub>2</sub> = 10<br>
+      Points per pair: 2<br>
+      <strong>Total:</strong> 2 &times; 10 = <strong>20 points</strong>.
+    </div>
+
+    <hr />
+
+    <h3>5. Parallelograms from Parallel Lines</h3>
+    <p>
+      A parallelogram is formed by the intersection of two sets of parallel lines (e.g., horizontal and vertical).
+    </p>
+    <ul>
+      <li>
+        To make 1 parallelogram, you need to choose <strong>2 horizontal lines</strong> (from set m) AND <strong>2 vertical lines</strong> (from set n).
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-weight: bold; font-size: 1.2em;">
+      Parallelograms = <sup>m</sup>C<sub>2</sub> &times; <sup>n</sup>C<sub>2</sub>
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> 4 horizontal lines intersecting 5 vertical lines.<br><br>
+      Horizontal choices: <sup>4</sup>C<sub>2</sub> = 6<br>
+      Vertical choices: <sup>5</sup>C<sub>2</sub> = 10<br><br>
+      <strong>Total:</strong> 6 &times; 10 = <strong>60 parallelograms</strong>.
+    </div>
+
+    <br>
+
+    <h1>Distribution & Partitioning</h1>
+    <p>
+      These problems involve distributing <strong>n</strong> objects into <strong>r</strong> boxes (or groups). The method changes entirely based on whether the objects and boxes are <span class="bg-blue">Distinct</span> (different) or <span class="bg-purple">Identical</span> (indistinguishable).
+    </p>
+
+    <hr />
+
+    <h3>1. Distinct Objects &rarr; Distinct Boxes</h3>
+    <p>
+      Every object is unique, and every box is unique (e.g., Box A and Box B).
+    </p>
+    <ul>
+      <li>
+        <strong>Logic:</strong> Take the first object; it can go into any of the <strong>r</strong> boxes. The second object also has <strong>r</strong> choices. This continues for all <strong>n</strong> objects.
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Ways = r<sup>n</sup>
+    </div>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Distribute <strong>3 distinct balls</strong> into <strong>2 distinct boxes</strong>.<br><br>
+      Ball 1 has 2 choices.<br>
+      Ball 2 has 2 choices.<br>
+      Ball 3 has 2 choices.<br>
+      <strong>Total = 2 &times; 2 &times; 2 = 2<sup>3</sup> = 8 ways.</strong>
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Distinct Objects &rarr; Identical Boxes</h3>
+    <p>
+      The objects are different, but the boxes look the same. This means the <strong>order of boxes doesn't matter</strong>; only <em>which objects are grouped together</em> matters.
+    </p>
+    <ul>
+      <li>
+        This is a <strong>Partitioning</strong> problem.
+      </li>
+      <li>
+        Mathematically, this relates to <strong>Stirling Numbers of the Second Kind</strong>.
+      </li>
+    </ul>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Distribute <strong>3 distinct students</strong> (A, B, C) into <strong>2 identical teams</strong> (Team 1, Team 2 are indistinguishable, so {A, B} in T1 and {C} in T2 is the same as {C} in T1 and {A, B} in T2).<br><br>
+      <strong>Possible Groupings:</strong><br>
+      1. {A, B} and {C}<br>
+      2. {A, C} and {B}<br>
+      3. {B, C} and {A}<br><br>
+      <strong>Total = 3 ways.</strong>
+    </div>
+
+    <hr />
+
+    <h3>3. Identical Objects &rarr; Distinct Boxes</h3>
+    <p>
+      This is the famous <span class="bg-orange">Beggar’s Method</span> or <span class="text-orange">Stars and Bars</span> method.
+    </p>
+    <ul>
+      <li>
+        Since objects are identical, it doesn't matter <em>which</em> object goes where, only <em>how many</em> go into each box.
+      </li>
+      <li>
+        <strong>Concept:</strong> To divide <strong>n</strong> items into <strong>r</strong> groups, we need <strong>r-1</strong> separators (bars).
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Formula = <sup>n+r-1</sup>C<sub>r-1</sub>
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Distribute <strong>5 identical coins</strong> among <strong>3 beggars</strong>.<br><br>
+      Here, n = 5 (coins), r = 3 (beggars).<br>
+      Formula: <sup>5+3-1</sup>C<sub>3-1</sub><br>
+      = <sup>7</sup>C<sub>2</sub><br>
+      = (7 &times; 6) / 2 = <strong>21 ways</strong>.
+    </div>
+
+    <hr />
+
+    <h3>4. Integral Solutions (Linear Equations)</h3>
+    <p>
+      This is a direct application of the Beggar's Method. It finds the number of solutions for equations like:
+    </p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      x + y + z = n
+    </div>
+
+    <h4>Case A: Non-Negative Integers (x, y, z &ge; 0)</h4>
+    <p>
+      This is exactly the same as distributing <strong>n</strong> coins to <strong>r</strong> variables.
+    </p>
+    <div class="example-box">
+      <span class="example-label">Example</span> Find non-negative solutions for <strong>x + y + z = 6</strong>.<br>
+      (n=6, r=3 variables).<br>
+      Ways = <sup>6+3-1</sup>C<sub>3-1</sub> = <sup>8</sup>C<sub>2</sub> = <strong>28 solutions</strong>.
+    </div>
+
+    <h4>Case B: With Restrictions (Lower Limits)</h4>
+    <p>
+      If variables must be greater than zero (e.g., x &ge; 1), we "feed" them their minimum requirement first, then distribute the rest.
+    </p>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> x + y + z = 6, subject to <span class="text-red">x &ge; 1, y &ge; 2, z &ge; 0</span>.<br><br>
+      <strong>Step 1: Adjust variables.</strong><br>
+      Give x its 1 required unit (let x = x' + 1).<br>
+      Give y its 2 required units (let y = y' + 2).<br>
+      z has no restriction.<br><br>
+      <strong>Step 2: Rewrite Equation.</strong><br>
+      (x' + 1) + (y' + 2) + z = 6<br>
+      x' + y' + z = 6 - 1 - 2<br>
+      <strong>x' + y' + z = 3</strong><br><br>
+      <strong>Step 3: Solve new equation.</strong><br>
+      Now distribute remaining 3 to 3 variables.<br>
+      <sup>3+3-1</sup>C<sub>3-1</sub> = <sup>5</sup>C<sub>2</sub> = <strong>10 solutions</strong>.
+    </div>
+
+    <br>
+
+    <h1>Special Standard Types</h1>
+    <p>
+      This section covers two specialized problem types: <strong>Derangements</strong> (arranging objects where <em>none</em> are in their correct spot) and <strong>Grid Problems</strong> (counting paths on a grid).
+    </p>
+
+    <hr />
+
+    <h3>1. Derangements (The "Wrong Envelope" Problem)</h3>
+    <p>
+      A <span class="bg-blue">Derangement</span> is a permutation of distinct objects such that <span class="text-blue">no object appears in its original position</span>.
+    </p>
+    <ul>
+      <li>
+        <strong>Classic Scenario:</strong> Placing <strong>n</strong> letters into <strong>n</strong> addressed envelopes such that <strong>no letter</strong> goes into the correct envelope.
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Formula: D<sub>n</sub> = n! [ 1 &minus; 1/1! + 1/2! &minus; 1/3! + ... + (&minus;1)<sup>n</sup>/n! ]
+    </div>
+
+    <h4>Standard Values to Memorize:</h4>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 10px;">Objects (n)</th>
+          <th style="padding: 10px;">Derangements (D<sub>n</sub>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 10px; text-align: center;">1</td>
+          <td style="padding: 10px; text-align: center;">0</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 10px; text-align: center;">2</td>
+          <td style="padding: 10px; text-align: center;">1</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 10px; text-align: center;">3</td>
+          <td style="padding: 10px; text-align: center;">2</td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 10px; text-align: center;">4</td>
+          <td style="padding: 10px; text-align: center;">9</td>
+        </tr>
+        <tr style="background-color: #282828;">
+          <td style="padding: 10px; text-align: center;">5</td>
+          <td style="padding: 10px; text-align: center;">44</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Place <strong>3 letters</strong> in 3 wrong envelopes.<br><br>
+      Formula: D<sub>3</sub> = 3! &times; (1 &minus; 1 + 1/2! &minus; 1/3!)<br>
+      = 6 &times; (1/2 &minus; 1/6)<br>
+      = 6 &times; (3/6 &minus; 1/6) = 6 &times; (2/6)<br>
+      = <strong>2 ways</strong>.
+    </div>
+
+    
+
+    <hr />
+
+    <h3>2. Grid Problems (Shortest Path)</h3>
+    <p>
+      These problems ask for the number of <span class="bg-green">shortest paths</span> from point <strong>(0,0)</strong> to point <strong>(m,n)</strong> on a grid.
+    </p>
+    <ul>
+      <li>
+        <strong>Constraint:</strong> You can only move <span class="text-green">Right (R)</span> or <span class="text-green">Up (U)</span>.
+      </li>
+      <li>
+        <strong>Logic:</strong> To reach (m, n), you <em>must</em> make exactly <strong>m</strong> Right moves and <strong>n</strong> Up moves. The problem is simply arranging these letters (R, R, ... U, U...).
+      </li>
+    </ul>
+
+    <div class="example-box" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+      Total Paths = (m + n)! / [ m! &times; n! ]
+    </div>
+
+    
+
+    <div class="example-box">
+      <span class="example-label">Example</span> Find paths from (0,0) to <strong>(2,3)</strong>.<br><br>
+      <strong>Steps Required:</strong> 2 Right + 3 Up = <strong>5 Total Steps</strong>.<br>
+      <strong>Calculation:</strong> Permutation of {R, R, U, U, U}.<br>
+      = 5! / (2! &times; 3!)<br>
+      = 120 / (2 &times; 6)<br>
+      = 120 / 12 = <strong>10 paths</strong>.
+    </div>
+
+    <br>
+
+    <h1>Basic Formulae Sheet</h1>
+    <p>
+      A quick reference guide for all essential formulas in Permutations, Combinations, and Number Theory.
+    </p>
+
+    <hr />
+
+    <h3>1. Basics & Factorials</h3>
+    
+    <h4>Factorial Definition</h4>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      n! = n &times; (n&minus;1) &times; (n&minus;2) &times; ... &times; 1
+    </div>
+    <ul>
+      <li><strong>Standard Values:</strong> 0! = 1, 1! = 1</li>
+      <li><strong>Recursive Property:</strong> n! = n &times; (n&minus;1)!</li>
+    </ul>
+
+    <h4>Legendre’s Formula (Exponent of Prime p in n!)</h4>
+    <p>Used to find the highest power of a prime <em>p</em> that divides <em>n!</em>.</p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      E<sub>p</sub>(n!) = [n/p] + [n/p<sup>2</sup>] + [n/p<sup>3</sup>] + ...
+    </div>
+    <p style="font-size: 0.9em; color: #aaa;">(Where [x] is the floor function/greatest integer).</p>
+
+    <hr />
+
+    <h3>2. Fundamental Principles</h3>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <thead>
+        <tr style="background-image: linear-gradient(to right, #4527A0, #5E35B1); color: #FFFFFF;">
+          <th style="padding: 10px;">Rule</th>
+          <th style="padding: 10px;">Keyword</th>
+          <th style="padding: 10px;">Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #282828;">
+          <td style="padding: 10px; font-weight: bold; color: #90CAF9;">Multiplication</td>
+          <td style="padding: 10px;">AND (Succession)</td>
+          <td style="padding: 10px;"><strong>m &times; n</strong></td>
+        </tr>
+        <tr style="background-color: #1E1E1E;">
+          <td style="padding: 10px; font-weight: bold; color: #90CAF9;">Addition</td>
+          <td style="padding: 10px;">OR (Mutually Exclusive)</td>
+          <td style="padding: 10px;"><strong>m + n</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr />
+
+    <h3>3. Permutations (Arrangements)</h3>
+    <ul>
+      <li>
+        <strong>Linear Permutation (Distinct):</strong> Arranging <em>r</em> objects out of <em>n</em>.
+        <br><span class="text-green" style="font-weight: bold;"><sup>n</sup>P<sub>r</sub> = n! / (n&minus;r)!</span>
+      </li>
+      <li>
+        <strong>Arrangement of All Objects:</strong>
+        <br><span class="text-green" style="font-weight: bold;"><sup>n</sup>P<sub>n</sub> = n!</span>
+      </li>
+      <li>
+        <strong>Repetition Allowed:</strong> Arranging <em>r</em> positions using <em>n</em> objects.
+        <br><span class="text-green" style="font-weight: bold;">n<sup>r</sup></span>
+      </li>
+      <li>
+        <strong>Identical Objects:</strong> Arranging <em>n</em> objects with <em>p, q, r</em> identical types.
+        <br><span class="text-green" style="font-weight: bold;">Arrangements = n! / (p! &times; q! &times; r!)</span>
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>4. Circular Permutations</h3>
+    <ul>
+      <li>
+        <strong>Distinct Objects (Standard):</strong> (Order matters).
+        <br><span class="text-purple" style="font-weight: bold;">(n &minus; 1)!</span>
+      </li>
+      <li>
+        <strong>Identical Orientation (Necklace/Garland):</strong> (Clockwise = Anti-clockwise).
+        <br><span class="text-purple" style="font-weight: bold;">(n &minus; 1)! / 2</span>
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>5. Combinations (Selections)</h3>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      <sup>n</sup>C<sub>r</sub> = n! / [r!(n&minus;r)!]
+    </div>
+    
+    <h4>Important Properties</h4>
+    <ul>
+      <li><strong>Relation:</strong> <sup>n</sup>P<sub>r</sub> = <sup>n</sup>C<sub>r</sub> &times; r!</li>
+      <li><strong>Symmetry:</strong> <sup>n</sup>C<sub>r</sub> = <sup>n</sup>C<sub>n&minus;r</sub></li>
+      <li><strong>Pascal's Identity:</strong> <sup>n</sup>C<sub>r</sub> + <sup>n</sup>C<sub>r&minus;1</sub> = <sup>n+1</sup>C<sub>r</sub></li>
+      <li><strong>Ratio Formula:</strong> <sup>n</sup>C<sub>r</sub> / <sup>n</sup>C<sub>r&minus;1</sub> = (n &minus; r + 1) / r</li>
+    </ul>
+
+    <h4>Total Selections (Power Set)</h4>
+    <ul>
+      <li>At least one item from <em>n</em> distinct: <strong>2<sup>n</sup> &minus; 1</strong></li>
+      <li>From mixed identical/distinct: <strong>[(p+1)(q+1)...2<sup>t</sup>] &minus; 1</strong></li>
+    </ul>
+
+    <hr />
+
+    <h3>6. Geometry Formulas</h3>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);">
+      <tr style="background-color: #333; color: #fff;">
+        <th style="padding: 10px;">Shape/Object</th>
+        <th style="padding: 10px;">Formula</th>
+      </tr>
+      <tr>
+        <td style="padding: 10px;"><strong>Diagonals</strong> (n-sided polygon)</td>
+        <td style="padding: 10px;">n(n&minus;3) / 2</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px;"><strong>Triangles</strong> (m collinear)</td>
+        <td style="padding: 10px;"><sup>n</sup>C<sub>3</sub> &minus; <sup>m</sup>C<sub>3</sub></td>
+      </tr>
+      <tr>
+        <td style="padding: 10px;"><strong>Straight Lines</strong> (m collinear)</td>
+        <td style="padding: 10px;"><sup>n</sup>C<sub>2</sub> &minus; <sup>m</sup>C<sub>2</sub> + 1</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px;"><strong>Parallelograms</strong> (m & n lines)</td>
+        <td style="padding: 10px;"><sup>m</sup>C<sub>2</sub> &times; <sup>n</sup>C<sub>2</sub></td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <h3>7. Distribution & Grouping</h3>
+    <ul>
+      <li>
+        <strong>Unequal Groups (m &ne; n):</strong> Distributing distinct items into groups.
+        <br><span class="text-orange" style="font-weight: bold;">(m+n)! / (m! &times; n!)</span>
+      </li>
+      <li>
+        <strong>Equal Groups (Unlabelled):</strong> Dividing 2n items into 2 groups of size n.
+        <br><span class="text-orange" style="font-weight: bold;">(2n)! / (n! &times; n! &times; 2!)</span>
+      </li>
+      <li>
+        <strong>Distribution to Persons (Labelled):</strong> Distributing 2n items to 2 people.
+        <br><span class="text-orange" style="font-weight: bold;">(2n)! / (n!)<sup>2</sup></span> (No division by 2!)
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>8. Beggar's Method (Integral Solutions)</h3>
+    <p>Equation: x<sub>1</sub> + x<sub>2</sub> + ... + x<sub>r</sub> = n</p>
+    <ul>
+      <li>
+        <strong>Non-Negative (x &ge; 0):</strong> (Empty bins allowed)
+        <br><span class="bg-blue" style="font-weight: bold;"><sup>n+r&minus;1</sup>C<sub>r&minus;1</sub></span>
+      </li>
+      <li>
+        <strong>Positive Integral (x &ge; 1):</strong> (No empty bins)
+        <br><span class="bg-blue" style="font-weight: bold;"><sup>n&minus;1</sup>C<sub>r&minus;1</sub></span>
+      </li>
+    </ul>
+
+    <hr />
+
+    <h3>9. Derangements & Sums</h3>
+    
+    <h4>Derangements (D<sub>n</sub>)</h4>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      D<sub>n</sub> = n! [ 1 &minus; 1/1! + 1/2! &minus; ... + (&minus;1)<sup>n</sup>/n! ]
+    </div>
+    <p style="text-align: center;"><strong>D<sub>3</sub> = 2</strong> | <strong>D<sub>4</sub> = 9</strong> | <strong>D<sub>5</sub> = 44</strong></p>
+
+    <h4>Sum of all Numbers</h4>
+    <p>Sum of all numbers formed by <em>n</em> non-zero digits:</p>
+    <div class="example-box" style="text-align: center; font-weight: bold;">
+      Sum = (Sum of digits) &times; (n&minus;1)! &times; (111... n times)
+    </div>
+
+    
+
+
+
+</body>
+
+</html>
